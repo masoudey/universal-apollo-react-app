@@ -1,0 +1,19 @@
+{
+  "name": "universal-apollo-react-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/masoudey/universal-apollo-react-app.git"
+  },
+  "author": "Masoud ey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/masoudey/universal-apollo-react-app/issues"
+  },
+  "homepage": "https://github.com/masoudey/universal-apollo-react-app#readme"
+}
