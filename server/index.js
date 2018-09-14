@@ -19,5 +19,11 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import mongoose from 'mongoose';
 import { Helmet } from 'react-helmet';
 
+mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true}).then(() => {
+    console.log("Connection to Database Successfull!");
+}).catch((err) => {
+    console.log("Connection to Database Error", err);
+});
+
 
 
