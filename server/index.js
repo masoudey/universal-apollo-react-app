@@ -28,9 +28,17 @@ mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true}).then
     console.log("Connection to Database Error", err);
 });
 
-const app = express();
 const PORT = process.env.PORT || 5000;
+const configurations = {
+    production: {ssl: true, port: PORT, hostname: 'whatever.com'},
+    development: {ssl: false, port: PORT, hostname: 'localhost'}
+}
 
+const environment = process.env.NODE_ENV || 'production';
+const config = configurations[environment];
+
+
+const app = express();
 app.use(cors({
     origin: webConfig.siteURL,
     credentials: true
@@ -41,7 +49,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/', express.static('public'));
 
+const getMe = async req => {
+    const token = req.cookies.token ? req.cookies.token : null;
+    if (token) {
+        try {
+            return await jwt.verify(token, process.env.JWT_SECRET);
+        } catch (e) {
+            throw new AuthenticationError('Session Expired...');
+        }
+    }
+}
 
+const apollo = new ApolloServer({})
+apollo.applyMiddleware({ app, path: '/graphql'});
 
 app.listen(PORT,() => {
     console.log(`Server is running on port ${PORT}`);
