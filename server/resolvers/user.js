@@ -52,10 +52,21 @@ export default {
 
         signIn: async (
             parents,
-            { login, password },
+            { email, password },
             { models, secret },
         ) => {
-            
+            const user = await models.User.findOne({ email });
+
+            if (!user) {
+                throw new UserInputError('User doesnt exist');
+            }
+
+            const isValidPass = await user.validatePassword(password)
+            if (!isValidPass) {
+                throw new UserInputError('Invalid password');
+            }
+
+            return {token: createToken(user, secret, '30m')}
         }
     },
 }
