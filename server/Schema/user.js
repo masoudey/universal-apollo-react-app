@@ -9,7 +9,7 @@ export default gql`
 
     extend type Mutation {
         signUp(
-            username:String!
+            username: String!
             email: String!
             password: String!
             firstName: String! 
@@ -17,8 +17,12 @@ export default gql`
             profileImage: String
         ): Token!
         signIn(email: String!, password: String!): Token!
-        updateUser(username: String!): User!
-        deleteUser(id: ID!): Boolean!    
+        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!
+        deleteUser(id: ID!): Boolean!
+        setUserImage(email: String!, userImage: String!): User!
+        changeEmail(currentEmail: String!, newEmail: String!): User!
+        changePassword(email: String!, password: String!): User!
+        passwordReset(email: String!): User! 
     }
 
     type Token {
@@ -32,7 +36,8 @@ export default gql`
         email: String!
         firstName: String! 
         lastName: String!
-        profileImage: String
+        bio: String
+        userImage: String
         rol: String
         posts: [post!]
     }

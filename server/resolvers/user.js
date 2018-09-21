@@ -1,8 +1,12 @@
 import jwt from "jsonwebtoken";
+import generator from "generate-password";
+import axios from "axios";
 import { combineResolvers } from "graphql-resolvers";
 import { AuthenticationError, UserInputError } from "apollo-server";
 
+import webConfig from "../webConfig";
 import { isAuthenticated, isAdmin } from "./authorization";
+import { throwServerError } from "apollo-link-http-common";
 
 const createToken = async (user, secret, expiresIn) => {
     const { id, email, username, role } = user;
@@ -15,14 +19,14 @@ export default {
             await models.User.find(),
 
         user: async (parent, { id }, { models }) =>
-            await models.User.findOne(id),
+            await models.User.findById(id),
 
         me: async (parent, args, { models, me }) => {
             if (!me) {
                 return null;
             }
 
-            return await models.User.findOne(me.id)
+            return await models.User.findById(me.id)
         },
     },
     Mutation: {
@@ -30,7 +34,7 @@ export default {
             parent,
             { username, email, password, firstName, 
                 lastName,
-                profileImage },
+                userImage },
             { models, secret },
         ) => {
             const user = await models.User.findOne({ email, username});
@@ -45,7 +49,7 @@ export default {
                 password,
                 firstName, 
                 lastName,
-                profileImage,
+                userImage,
             }).save();
             return { token: createToken(newUser, secret, '30m')};
         },
@@ -67,6 +71,79 @@ export default {
             }
 
             return {token: createToken(user, secret, '30m')}
+        },
+        updateUser: combineResolvers(
+            isAuthenticated,
+            async (parent, { email, username, firstName, lastName}, { models, me }) => {
+                const user = await models.User.findOneAndUpdate({ email }, { $set: {username, firstName, lastName}}, {new: true});
+
+                if (!user) {
+                    throw new UserInputError('User not found');
+                }
+
+                return user;
+            },
+        ),
+        deleteUser: combineResolvers(
+            isAdmin,
+            async (parent, { id }, { models }) =>
+                await models.User.findByIdAndDelete({id})
+        ),
+        setUserImage: async (parent, { email, userImage}, { models, me}) => {
+            const user = await models.User.findOneAndUpdate({ email }, {$set: { userImage }}, {new: true});
+
+            if (!user) {
+                throw new UserInputError('User not found');
+            }
+
+            return user;
+        },
+        changeEmail: async (parent, { currentEmail, newEmail }, { models }) => {
+            const user = await models.User.findOneAndUpdate({ email: currentEmail }, {$set: {email: newEmail}}, {new: true});
+
+            if(!user) {
+                throw new UserInputError('User not found');
+            }
+
+            return user;
+        },
+        changePassword: async (parent, { email, password }, { models }) => {
+            const hashPassword = await models.User.generatePasswordHash(password);
+            const user = await models.User.findOneAndUpdate({ email }, {$set: { password: hashPassword}}, {new: true});
+
+            if (!user) {
+                throw new UserInputError('User not found');
+            }
+
+            return user;
+        },
+        passwordReset: async (parent, { email }, { models }) => {
+            const generatedPassword = generator.generate({ length: 10, numbers: true});
+            const hashPassword = await models.User.generatePasswordHash(generatedPassword);
+            const user = await models.User.findOneAndUpdate({ email }, {$set: { password: hashPassword}}, {new: true});
+
+            if (!user) {
+                throw new UserInputError('User not found');
+            } else {
+                const data = {
+                    email,
+                    generatedPassword
+                }
+
+                axios.post(`${webConfig.siteURL}/password-reset`, data)
+                .then((response)=>{
+                    console.log('Email has sent!');
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            }
+
+            return user;
         }
     },
+    User: {
+        posts: async (user, args, { models }) =>
+            await models.Post.find({ userId: user.id })
+    }
 }
