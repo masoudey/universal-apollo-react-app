@@ -35,5 +35,8 @@ const User = new Schema({
     role: {
         type: String,
     },
-
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+    }]
 })
