@@ -30,7 +30,7 @@ export default gql`
     }
 
     type User {
-        id: ID!
+        _id: ID!
         username: String!
         password: String!
         email: String!
@@ -39,6 +39,7 @@ export default gql`
         bio: String
         userImage: String
         rol: String
+        createdAt: String!
         posts: [post!]
     }
 `;

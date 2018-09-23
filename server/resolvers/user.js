@@ -6,7 +6,7 @@ import { AuthenticationError, UserInputError } from "apollo-server";
 
 import webConfig from "../webConfig";
 import { isAuthenticated, isAdmin } from "./authorization";
-import { throwServerError } from "apollo-link-http-common";
+
 
 const createToken = async (user, secret, expiresIn) => {
     const { id, email, username, role } = user;
@@ -67,7 +67,7 @@ export default {
 
             const isValidPass = await user.validatePassword(password)
             if (!isValidPass) {
-                throw new UserInputError('Invalid password');
+                throw new AuthenticationError('Invalid password');
             }
 
             return {token: createToken(user, secret, '30m')}

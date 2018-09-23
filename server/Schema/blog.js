@@ -22,7 +22,7 @@ export default gql`
     }
 
     type Post {
-        id: ID!
+        _id: ID!
         title: String!
         desc: String!
         content: String!
