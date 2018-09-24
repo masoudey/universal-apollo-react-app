@@ -43,7 +43,7 @@ export default {
                 throw new UserInputError('User Exist');
             }
 
-            const newUser = await models.User({
+            const newUser = await new models.User({
                 username,
                 email,
                 password,

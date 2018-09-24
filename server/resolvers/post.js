@@ -2,6 +2,8 @@ import { combineResolvers } from "graphql-resolvers";
 
 import { isAuthenticated, isPostOwner } from "./authorization";
 
+import pubsub, { EVENTS } from "../subscription";
+
 const toCursorHash = string => Buffer.from(string).toString('base64');
 
 const fromCursorHash = string =>
@@ -9,7 +11,7 @@ const fromCursorHash = string =>
 
 export default {
     Query: {
-        posts: async (parent, { cursor, limit = 100 }, { models }) => {
+        posts: async (parent, { cursor, limit = 50 }, { models }) => {
             const cursorOptions = cursor
                 ? {createdAt: {$lte: fromCursorHash(cursor)}}
                 : {};
@@ -37,6 +39,42 @@ export default {
     },
 
     Mutation: {
-        
-    }
-}
+        createPost: combineResolvers(
+            isAuthenticated,
+            async (parent, { title, desc, content, cotagory, img }, { models, me }) => {
+                const post = await new models.Post({
+                    title,
+                    desc,
+                    content,
+                    cotagory,
+                    img,
+                    userId: me.id,
+                }).save();
+
+                pubsub.publish(EVENTS.POST.CREATED, {
+                    postCreated: { post },
+                });
+
+                return post;
+            },
+        ),
+
+        deletePost: combineResolvers(
+            isAuthenticated,
+            isPostOwner,
+            async (parent, { id }, { models }) =>
+                await models.Post.findByIdAndDelete({ id }),
+        ),
+    },
+
+    Post: {
+        user: async (post, args, { loaders }) =>
+            await loaders.user.load(post.userId),
+    },
+
+    subscription: {
+        postCreated: {
+            subscribe: () => pubsub.asyncIterator(EVENTS.POST.CREATED),
+        },
+    },
+};
