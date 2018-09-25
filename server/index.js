@@ -1,8 +1,9 @@
 import 'babel-polyfill';
 import 'dotenv/config';
 import path from "path";
-import http from "http";
-import https from "https";
+import * as http from "http";
+import * as https from "https";
+import * as fs from "fs";
 import cors from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
@@ -21,6 +22,10 @@ import mongoose from 'mongoose';
 import { Helmet } from 'react-helmet';
 import DataLoader from "dataloader";
 import webConfig from "../webConfig";
+
+import schema from "./Schema";
+import resolvers from "./resolvers";
+import models from "./models";
 
 mongoose.connect(process.env.DB_CONNECTION_STRING, {useNewUrlParser: true}).then(() => {
     console.log("Connection to Database Successfull!");
@@ -60,10 +65,58 @@ const getMe = async req => {
     }
 }
 
-const apollo = new ApolloServer({})
+const apollo = new ApolloServer({
+    typeDefs: schema,
+    resolvers,
+    formatError: error => {
+        const message = error.message
+            .replace('mogoose Validation Error: ', '')
+            .replace('Validation error', '')
+        return {
+            ...error,
+            message,
+        };
+    },
+    context: async ({ req, connection}) => {
+        if (connection) {
+            return {
+                models,
+            };
+        }
+
+        if (req) {
+            const me = await getMe(req);
+    
+            return {
+                models,
+                me,
+                secret: process.env.JWT_SECRET,
+            };
+        }
+    },
+});
 apollo.applyMiddleware({ app, path: '/graphql'});
 
-app.listen(PORT,() => {
-    console.log(`Server is running on port ${PORT}`);
+var server
+
+if (config.ssl) {
+    server = https.createServer(
+        {
+            key: fs.readFileSync(`./ssl/${environment}/server.key`),
+            cert: fs.readFileSync(`./ssl/${environment}/server.crt`)
+        },
+        app
+    )
+} else {
+    server = http.createServer(app)
+}
+
+apollo.installSubscriptionHandlers(server);
+
+server.listen({ port: config.port }, () => {
+    console.log(
+        '🚀 Server ready at',
+        `http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${apollo.graphqlPath}`
+      )
 })
 

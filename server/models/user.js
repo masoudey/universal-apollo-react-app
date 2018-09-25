@@ -27,7 +27,6 @@ const User = new Schema({
     },
     userImage: {
         type: String,
-        required: true
     },
     bio: {
         type: String,
@@ -61,13 +60,7 @@ User.pre('save', next => {
     })
 })
 
-User.prototype.generatePasswordHash = async function() {
-    const saltRound = 10;
-    return await bcrypt.hashSync(this.password, saltRound);    
-}
-
-User.prototype.validatePassword = async function(password) {
-    return await bcrypt.compare(password, this.password);
-}
-
+const userModel = mongoose.model('User', User);
+const newUser = userModel.findOne({username: "masoudey"});
+console.log(newUser);
 export default mongoose.model('User', User);

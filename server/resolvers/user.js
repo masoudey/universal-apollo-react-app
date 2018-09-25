@@ -4,14 +4,24 @@ import axios from "axios";
 import { combineResolvers } from "graphql-resolvers";
 import { AuthenticationError, UserInputError } from "apollo-server";
 
-import webConfig from "../webConfig";
+import webConfig from "../../webConfig";
 import { isAuthenticated, isAdmin } from "./authorization";
 
+import bcrypt from "bcrypt";
 
 const createToken = async (user, secret, expiresIn) => {
     const { id, email, username, role } = user;
     return await jwt.sign({id, email, username, role }, secret, {expiresIn,});
 };
+
+const generatePasswordHash = async function() {
+    const saltRound = 10;
+    return await bcrypt.hashSync(this.password, saltRound);    
+}
+
+const validatePassword = async function(password) {
+    return await bcrypt.compare(password, this.password);
+}
 
 export default {
     Query: {
@@ -32,12 +42,11 @@ export default {
     Mutation: {
         signUp: async (
             parent,
-            { username, email, password, firstName, 
-                lastName,
-                userImage },
+            { username, email, password, firstName, lastName, userImage },
             { models, secret },
         ) => {
-            const user = await models.User.findOne({ email, username});
+            console.log("models", models.User);
+            const user = await models.User.findOne({ email });
 
             if (user) {
                 throw new UserInputError('User Exist');
@@ -65,7 +74,7 @@ export default {
                 throw new UserInputError('User doesnt exist');
             }
 
-            const isValidPass = await user.validatePassword(password)
+            const isValidPass = await validatePassword(password)
             if (!isValidPass) {
                 throw new AuthenticationError('Invalid password');
             }
@@ -108,7 +117,7 @@ export default {
             return user;
         },
         changePassword: async (parent, { email, password }, { models }) => {
-            const hashPassword = await models.User.generatePasswordHash(password);
+            const hashPassword = await generatePasswordHash(password);
             const user = await models.User.findOneAndUpdate({ email }, {$set: { password: hashPassword}}, {new: true});
 
             if (!user) {
@@ -119,7 +128,7 @@ export default {
         },
         passwordReset: async (parent, { email }, { models }) => {
             const generatedPassword = generator.generate({ length: 10, numbers: true});
-            const hashPassword = await models.User.generatePasswordHash(generatedPassword);
+            const hashPassword = await generatePasswordHash(generatedPassword);
             const user = await models.User.findOneAndUpdate({ email }, {$set: { password: hashPassword}}, {new: true});
 
             if (!user) {

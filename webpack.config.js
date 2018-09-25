@@ -31,7 +31,7 @@ const clientConfig = {
                 loader: 'babel-loader',
 
                 options: {
-                    presets: ['react', 'env', 'stage-0'],
+                    presets: ['react', 'env', 'stage-2'],
                     plugins: [
                         'react-html-attrs',
                         ]
@@ -108,7 +108,7 @@ const serverConfig = {
                 loader: 'babel-loader',
 
                 options: {
-                    presets: ['react', 'env', 'stage-0'],
+                    presets: ['react', 'env', 'stage-2'],
                     plugins: [
                         'dynamic-import-node',
                         'react-html-attrs',

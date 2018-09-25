@@ -68,11 +68,11 @@ export default {
     },
 
     Post: {
-        user: async (post, args, { loaders }) =>
-            await loaders.user.load(post.userId),
+        user: async (post, args, { models }) =>
+            await models.User.findById(post.userId),
     },
 
-    subscription: {
+    Subscription: {
         postCreated: {
             subscribe: () => pubsub.asyncIterator(EVENTS.POST.CREATED),
         },

@@ -40,6 +40,6 @@ export default gql`
         userImage: String
         rol: String
         createdAt: String!
-        posts: [post!]
+        posts: [Post!]
     }
 `;
