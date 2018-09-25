@@ -368,22 +368,33 @@ var apollo = new _apolloServerExpress.ApolloServer({
 
                         case 2:
                             if (!req) {
-                                _context2.next = 7;
+                                _context2.next = 5;
                                 break;
                             }
 
-                            _context2.next = 5;
-                            return getMe(req);
-
-                        case 5:
-                            me = _context2.sent;
+                            // const me = await getMe(req);
+                            me = {
+                                "_id": {
+                                    "$oid": "5ba9f7a39dab691ef4af9ff2"
+                                },
+                                "users": [],
+                                "username": "masoudey",
+                                "email": "masoud.ey@gmail.com",
+                                "password": "$2b$10$uah18eeMB0O0iji9zwqXxeptqUiwbqXZdikxF9t.M2p67zHs4LEkO",
+                                "firstName": "masoud",
+                                "lastName": "eyvat",
+                                "createdAt": {
+                                    "$date": "2018-09-25T08:53:55.570Z"
+                                },
+                                "__v": 0
+                            };
                             return _context2.abrupt('return', {
                                 models: _models2.default,
                                 me: me,
                                 secret: process.env.JWT_SECRET
                             });
 
-                        case 7:
+                        case 5:
                         case 'end':
                             return _context2.stop();
                     }
@@ -431,15 +442,19 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+var _user = __webpack_require__(/*! ./user */ "./server/models/user.js");
+
+var _user2 = _interopRequireDefault(_user);
+
+var _post = __webpack_require__(/*! ./post */ "./server/models/post.js");
+
+var _post2 = _interopRequireDefault(_post);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var models = {
-    User: Promise.resolve().then(function () {
-        return _interopRequireWildcard(__webpack_require__(/*! ./user */ "./server/models/user.js"));
-    }),
-    Post: Promise.resolve().then(function () {
-        return _interopRequireWildcard(__webpack_require__(/*! ./post */ "./server/models/post.js"));
-    })
+    User: _user2.default,
+    Post: _post2.default
 };
 
 exports.default = models;
@@ -574,24 +589,23 @@ var User = new Schema({
 });
 
 User.pre('save', function (next) {
-    if (!undefined.isModified('password')) {
+    var _this = this;
+
+    if (!this.isModified('password')) {
         return next();
     }
 
     _bcrypt2.default.genSalt(10, function (err, salt) {
         if (err) return next(err);
 
-        _bcrypt2.default.hash(undefined.password, salt, function (err, hash) {
-            undefined.password = hash;
+        _bcrypt2.default.hash(_this.password, salt, function (err, hash) {
+            _this.password = hash;
 
             next();
         });
     });
 });
 
-var userModel = _mongoose2.default.model('User', User);
-var newUser = userModel.findOne({ username: "masoudey" });
-console.log(newUser);
 exports.default = _mongoose2.default.model('User', User);
 
 /***/ }),
@@ -744,21 +758,25 @@ exports.default = {
                         switch (_context.prev = _context.next) {
                             case 0:
                                 cursorOptions = cursor ? { createdAt: { $lte: fromCursorHash(cursor) } } : {};
-                                _context.next = 3;
+
+                                console.log(fromCursorHash(cursor));
+                                _context.next = 4;
                                 return models.Post.find(cursorOptions, null, { sort: { createdAt: 'desc' }, limit: limit + 1 });
 
-                            case 3:
+                            case 4:
                                 posts = _context.sent;
                                 hasNextPage = posts.length > limit;
                                 edges = hasNextPage ? posts.slice(0, -1) : posts;
+
+                                console.log(edges);
                                 return _context.abrupt("return", {
                                     edges: edges,
                                     pageInfo: {
-                                        endCursor: toCursorHash(edges[edges.length - 1].createdAt.toString())
+                                        endCursor: toCursorHash(edges[edges.length - 1].date.toString())
                                     }
                                 });
 
-                            case 7:
+                            case 9:
                             case "end":
                                 return _context.stop();
                         }
@@ -1040,7 +1058,8 @@ exports.default = {
     Query: {
         users: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(parent, args, _ref5) {
-                var models = _ref5.models;
+                var models = _ref5.models,
+                    test = _ref5.test;
                 return regeneratorRuntime.wrap(function _callee4$(_context4) {
                     while (1) {
                         switch (_context4.prev = _context4.next) {

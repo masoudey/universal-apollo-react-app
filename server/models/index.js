@@ -1,8 +1,9 @@
-
+import userSchema from "./user";
+import postSchema from "./post";
 
 const models = {
-    User: import('./user'),
-    Post: import('./post'),
+    User: userSchema,
+    Post: postSchema,
 }
 
 export default models;

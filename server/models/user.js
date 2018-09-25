@@ -44,7 +44,7 @@ const User = new Schema({
     }]
 });
 
-User.pre('save', next => {
+User.pre('save', function (next) {
     if(!this.isModified('password')) {
         return next();
     }
@@ -60,7 +60,5 @@ User.pre('save', next => {
     })
 })
 
-const userModel = mongoose.model('User', User);
-const newUser = userModel.findOne({username: "masoudey"});
-console.log(newUser);
+
 export default mongoose.model('User', User);

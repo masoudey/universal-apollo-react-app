@@ -25,7 +25,7 @@ const validatePassword = async function(password) {
 
 export default {
     Query: {
-        users: async (parent, args, { models }) =>
+        users: async (parent, args, { models, test }) => 
             await models.User.find(),
 
         user: async (parent, { id }, { models }) =>

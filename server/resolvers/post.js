@@ -15,21 +15,21 @@ export default {
             const cursorOptions = cursor
                 ? {createdAt: {$lte: fromCursorHash(cursor)}}
                 : {};
-            
+                console.log(fromCursorHash(cursor))
                 const posts = await models.Post.find(
                     cursorOptions,
                     null,
                     {sort: { createdAt: 'desc'}, limit: limit + 1}
                 );
-
+  
                 const hasNextPage = posts.length > limit;
                 const edges = hasNextPage ? posts.slice(0, -1) : posts;
-
+                console.log(edges);
                 return {
                     edges,
                     pageInfo: {
                         endCursor: toCursorHash(
-                            edges[edges.length - 1].createdAt.toString(),
+                            edges[edges.length - 1].date.toString(),
                         ),
                     },
                 };

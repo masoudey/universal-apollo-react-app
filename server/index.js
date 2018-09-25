@@ -84,9 +84,25 @@ const apollo = new ApolloServer({
             };
         }
 
+
         if (req) {
-            const me = await getMe(req);
-    
+            // const me = await getMe(req);
+            const me = {
+                "_id": {
+                    "$oid": "5ba9f7a39dab691ef4af9ff2"
+                },
+                "users": [],
+                "username": "masoudey",
+                "email": "masoud.ey@gmail.com",
+                "password": "$2b$10$uah18eeMB0O0iji9zwqXxeptqUiwbqXZdikxF9t.M2p67zHs4LEkO",
+                "firstName": "masoud",
+                "lastName": "eyvat",
+                "createdAt": {
+                    "$date": "2018-09-25T08:53:55.570Z"
+                },
+                "__v": 0
+            }
+            
             return {
                 models,
                 me,
