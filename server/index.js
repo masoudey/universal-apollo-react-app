@@ -17,6 +17,7 @@ import { AuthenticationError } from 'apollo-server';
 import { ApolloProvider, getDataFromTree } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { createHttpLink } from 'apollo-link-http';
+import { SchemaLink } from "apollo-link-schema";
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import mongoose from 'mongoose';
 import { Helmet } from 'react-helmet';
@@ -53,6 +54,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/', express.static('public'));
+app.use(["*/:param", '*'], (req, res) => {
+    const URL_Param = req.params.param ? req.params.param : null;
+
+    const client = new ApolloClient({
+        ssrMode: true,
+        link: new SchemaLink({schema}),
+        cache: new InMemoryCache(),
+    })
+})
 
 const getMe = async req => {
     const token = req.cookies.token ? req.cookies.token : null;

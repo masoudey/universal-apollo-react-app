@@ -24,7 +24,6 @@ export default {
   
                 const hasNextPage = posts.length > limit;
                 const edges = hasNextPage ? posts.slice(0, -1) : posts;
-                console.log(edges);
                 return {
                     edges,
                     pageInfo: {

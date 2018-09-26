@@ -45,7 +45,6 @@ export default {
             { username, email, password, firstName, lastName, userImage },
             { models, secret },
         ) => {
-            console.log("models", models.User);
             const user = await models.User.findOne({ email });
 
             if (user) {

@@ -767,8 +767,6 @@ exports.default = {
                                 posts = _context.sent;
                                 hasNextPage = posts.length > limit;
                                 edges = hasNextPage ? posts.slice(0, -1) : posts;
-
-                                console.log(edges);
                                 return _context.abrupt("return", {
                                     edges: edges,
                                     pageInfo: {
@@ -776,7 +774,7 @@ exports.default = {
                                     }
                                 });
 
-                            case 9:
+                            case 8:
                             case "end":
                                 return _context.stop();
                         }
@@ -1161,22 +1159,21 @@ exports.default = {
                     while (1) {
                         switch (_context7.prev = _context7.next) {
                             case 0:
-                                console.log("models", models.User);
-                                _context7.next = 3;
+                                _context7.next = 2;
                                 return models.User.findOne({ email: email });
 
-                            case 3:
+                            case 2:
                                 user = _context7.sent;
 
                                 if (!user) {
-                                    _context7.next = 6;
+                                    _context7.next = 5;
                                     break;
                                 }
 
                                 throw new _apolloServer.UserInputError('User Exist');
 
-                            case 6:
-                                _context7.next = 8;
+                            case 5:
+                                _context7.next = 7;
                                 return new models.User({
                                     username: username,
                                     email: email,
@@ -1186,11 +1183,11 @@ exports.default = {
                                     userImage: userImage
                                 }).save();
 
-                            case 8:
+                            case 7:
                                 newUser = _context7.sent;
                                 return _context7.abrupt("return", { token: createToken(newUser, secret, '30m') });
 
-                            case 10:
+                            case 9:
                             case "end":
                                 return _context7.stop();
                         }
