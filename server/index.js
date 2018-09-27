@@ -14,17 +14,20 @@ import { renderToString, renderToStaticMarkup } from "react-dom/server";
 import { StaticRouter, matchPath } from "react-router-dom";
 import { ApolloServer } from 'apollo-server-express';
 import { AuthenticationError } from 'apollo-server';
-import { ApolloProvider, getDataFromTree } from 'react-apollo';
+import { ApolloProvider, getDataFromTree, renderToStringWithData } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
 import { SchemaLink } from "apollo-link-schema";
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { makeExecutableSchema } from "graphql-tools";
 import mongoose from 'mongoose';
 import { Helmet } from 'react-helmet';
 import DataLoader from "dataloader";
 import webConfig from "../webConfig";
 
-import schema from "./Schema";
+
+import HTML from "./helpers/renderer";
+
+import typeDefs from "./Schema";
 import resolvers from "./resolvers";
 import models from "./models";
 
@@ -57,10 +60,35 @@ app.use('/', express.static('public'));
 app.use(["*/:param", '*'], (req, res) => {
     const URL_Param = req.params.param ? req.params.param : null;
 
+    const schema = makeExecutableSchema({
+        typeDefs,
+        resolvers,
+    })
     const client = new ApolloClient({
         ssrMode: true,
         link: new SchemaLink({schema}),
         cache: new InMemoryCache(),
+    });
+
+    const context = {};
+
+    const App = (
+        <ApolloProvider client={client} >
+            <StaticRouter location={req.url} context={context} >
+            
+            </StaticRouter>
+        </ApolloProvider>
+    );
+
+    renderToStringWithData(App).then((content) => {
+        const initialState = client.extract();
+        const helmet = Helmet.renderStatic();
+
+        const html = <HTML content={content} state={initialState} helmet={helmet} />;
+
+        res.status(200);
+        res.send(`<!doctype html>\n${renderToStaticMarkup(html)}`);
+        res.end();
     })
 })
 
@@ -76,7 +104,7 @@ const getMe = async req => {
 }
 
 const apollo = new ApolloServer({
-    typeDefs: schema,
+    typeDefs,
     resolvers,
     formatError: error => {
         const message = error.message
