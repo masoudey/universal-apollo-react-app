@@ -14,6 +14,7 @@ import * as Cookies from "es-cookie";
 import { createBrowserHistory } from "history";
 
 import App from "../shared/app";
+import { defaults, resolvers } from "./resolvers";
 import registerServiceWorker from './registerServiceWorker';
 
 const httpLink = new HttpLink({
@@ -70,14 +71,6 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const cache = new InMemoryCache().restore(window.__APOLLO_STATE__);
-
-const defaults = {
-
-}
-
-const resolvers = {
-
-}
 
 const stateLink = withClientState({
     cache,
