@@ -8,6 +8,8 @@ export const defaults = {
 
 export const resolvers = {
     Mutation: {
-        
+        signUp: (_, { username, email, password, firstName, lastName, userImage }, { cache }) => {
+            
+        }
     }
 }
