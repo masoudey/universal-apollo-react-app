@@ -59,7 +59,10 @@ export default {
                 lastName,
                 userImage,
             }).save();
-            return { token: createToken(newUser, secret, '30m')};
+            return { 
+                token: createToken(newUser, secret, '30m'),
+                newUser,
+            };
         },
 
         signIn: async (
@@ -78,7 +81,10 @@ export default {
                 throw new AuthenticationError('Invalid password');
             }
 
-            return {token: createToken(user, secret, '30m')}
+            return {
+                token: createToken(user, secret, '30m'),
+                user,
+            }
         },
         updateUser: combineResolvers(
             isAuthenticated,

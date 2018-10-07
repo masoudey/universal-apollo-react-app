@@ -34,6 +34,8 @@ const clientConfig = {
                     presets: ['react', 'env', 'stage-2'],
                     plugins: [
                         'react-html-attrs',
+                        // 'transform-decorators-legacy',
+                        // 'transform-class-properties'
                         ]
                 }
             },

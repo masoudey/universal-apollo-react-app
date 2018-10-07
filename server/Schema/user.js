@@ -15,8 +15,8 @@ export default gql`
             firstName: String! 
             lastName: String!
             profileImage: String
-        ): Token!
-        signIn(email: String!, password: String!): Token!
+        ): AuthPayload!
+        signIn(email: String!, password: String!): AuthPayload!
         updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!
         deleteUser(id: ID!): Boolean!
         setUserImage(email: String!, userImage: String!): User!
@@ -25,8 +25,9 @@ export default gql`
         passwordReset(email: String!): User! 
     }
 
-    type Token {
+    type AuthPayload {
         token: String!
+        user: User!
     }
 
     type User {
