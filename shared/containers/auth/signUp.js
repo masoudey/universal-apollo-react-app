@@ -38,9 +38,32 @@ class SignUp extends Component {
     };
 
     handleSubmit = (e, signUp, client) => {
+        e.preventDefault();
+        console.log(client);
         signUp().then(async ({ data }) => {
-            
-        })
+           Cookies.set('token', data.signUp.token);
+           await this.props.refresh();
+           this.setState({ ...initialState });
+           this.props.history.push('/');
+        }).catch(error => {
+            this.setState({
+                error: 'Either your email or username is already taken'
+            });
+        });
+    }
+
+    confirmPW = () => {
+        const { password, passwordConfirm } = this.state;
+        const isMatch = password !== passwordConfirm;
+        this.setState({
+            passwordMatch: isMatch
+        });
+    }
+
+    validateForm = () => {
+        const { firstName, lastName, email, userName, password, passwordConfirm } = this.state
+        const isInvalid = !firstName || !lastName || !email || !userName || !password || password !== passwordConfirm
+        return isInvalid;
     }
 
     render() {
@@ -74,7 +97,7 @@ class SignUp extends Component {
                                         id="username"
                                         placeholder="UserName"
                                         onChange={this.handleChange}
-                                        onBlur={this.validateForm.bind(this)}
+                                        onBlur={this.validateForm}
                                         value={username}
                                         autoFocus
                                         required
@@ -137,7 +160,7 @@ class SignUp extends Component {
                                         id="passwordConfirm"
                                         data-typetoggle="#show"
                                         onChange={this.handleChange}
-                                        onBlur={this.confirmPW.bind(this)}
+                                        onBlur={this.confirmPW}
                                         value={passwordConfirm}
                                         placeholder="Confirm Password"
                                         required
@@ -162,3 +185,5 @@ class SignUp extends Component {
         )
     }
 }
+
+export default withRouter(SignUp)
