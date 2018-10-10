@@ -8,3 +8,14 @@ export const SIGNUP_USER = gql`
         }
     }
 `;
+
+export const GET_CURENT_USER = gql`
+    {
+        me{
+            id
+            username
+            email
+            role
+        }
+    }
+`;
