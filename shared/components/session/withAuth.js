@@ -4,6 +4,10 @@ import { Query } from "react-apollo";
 
 import { GET_CURENT_USER } from "../queries/userQueries";
 
-const withAuthentication = () => {
-    
-}
+const withAuthentication = conditionFn => Component => props => (
+    <Query query={GET_CURENT_USER}>
+        {({data}) => {
+            
+        }}
+    </Query>
+)

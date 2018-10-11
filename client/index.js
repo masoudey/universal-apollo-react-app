@@ -40,9 +40,9 @@ const terminatingLink = split(
 );
 
 const authLink = new ApolloLink((operation, forward) => {
-    operation.setContext(({ cookies = {} }) => ({
-        cookies: {
-            ...cookies,
+    operation.setContext(({ headers = {} }) => ({
+        headers: {
+            ...headers,
             'x-token': Cookies.get('token'),
         },
     }));
