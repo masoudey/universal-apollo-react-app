@@ -93,7 +93,7 @@ app.use(["*/:param", '*'], (req, res) => {
     })
 })
 
-const getMe = async req => {
+const getCurrentUser = async req => {
     const token = req.cookies.token ? req.cookies.token : null;
     if (token) {
         try {
@@ -125,8 +125,8 @@ const apollo = new ApolloServer({
 
 
         if (req) {
-            // const me = await getMe(req);
-            const me = {
+            // const currentUser = await getCurrentUser(req);
+            const currentUser = {
                 "_id": {
                     "$oid": "5ba9f7a39dab691ef4af9ff2"
                 },
@@ -144,7 +144,7 @@ const apollo = new ApolloServer({
             
             return {
                 models,
-                me,
+                currentUser,
                 secret: process.env.JWT_SECRET,
             };
         }

@@ -31,12 +31,12 @@ export default {
         user: async (parent, { id }, { models }) =>
             await models.User.findById(id),
 
-        me: async (parent, args, { models, me }) => {
-            if (!me) {
+        currentUser: async (parent, args, { models, currentUser }) => {
+            if (!currentUser) {
                 return null;
             }
 
-            return await models.User.findById(me.id)
+            return await models.User.findById(currentUser.id)
         },
     },
     Mutation: {
@@ -88,7 +88,7 @@ export default {
         },
         updateUser: combineResolvers(
             isAuthenticated,
-            async (parent, { email, username, firstName, lastName}, { models, me }) => {
+            async (parent, { email, username, firstName, lastName}, { models, currentUser }) => {
                 const user = await models.User.findOneAndUpdate({ email }, { $set: {username, firstName, lastName}}, {new: true});
 
                 if (!user) {
@@ -103,7 +103,7 @@ export default {
             async (parent, { id }, { models }) =>
                 await models.User.findByIdAndDelete({id})
         ),
-        setUserImage: async (parent, { email, userImage}, { models, me}) => {
+        setUserImage: async (parent, { email, userImage}, { models, currentUser}) => {
             const user = await models.User.findOneAndUpdate({ email }, {$set: { userImage }}, {new: true});
 
             if (!user) {

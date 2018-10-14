@@ -9,9 +9,9 @@ export const SIGNUP_USER = gql`
     }
 `;
 
-export const GET_CURENT_USER = gql`
+export const GET_CURRENT_USER = gql`
     {
-        me{
+        currentUser{
             id
             username
             email
