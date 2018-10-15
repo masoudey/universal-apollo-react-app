@@ -1,12 +1,17 @@
 import React from "react";
 
-import signUp from "./containers/auth/signUp";
-
+import SignUp from "./containers/auth/signUp";
+import withAuth from "./components/session/withAuth";
 
 const routes = [
     {
         path: '/signup',
-        component: signUp,
+        render: () => <SignUp />,
+        exact: true
+    },
+    {
+        path: '/dashboard',
+        render: withAuth(session => session && session.currentUser)(SignUp),
         exact: true
     }
 ]
