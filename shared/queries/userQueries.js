@@ -19,3 +19,14 @@ export const GET_CURRENT_USER = gql`
         }
     }
 `;
+
+export const GET_CLIENT_USER = gql`
+    {
+        currentUser @client{
+            id
+            username
+            email
+            role
+        }
+    }
+`;
