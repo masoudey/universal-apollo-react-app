@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import withSession from "./components/session/withSession";
 
 import Routes from "./routes";
+import Header from "./components/Header";
 
 
 class App extends Component {
@@ -14,6 +15,7 @@ class App extends Component {
         const session = this.props.session;
         return (
             <Fragment>
+                <Header />
                 <main>
                     <Routes session={session}/>
                 </main>
