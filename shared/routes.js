@@ -24,4 +24,6 @@ const Routes = ({session, refetch, ...props}) => {
             />
         </Switch>
     )
-}
+};
+
+export default Routes;

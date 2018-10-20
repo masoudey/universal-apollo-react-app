@@ -15,7 +15,7 @@ class App extends Component {
         const session = this.props.session;
         return (
             <Fragment>
-                <Header />
+                <Header session={session} />
                 <main>
                     <Routes session={session}/>
                 </main>
