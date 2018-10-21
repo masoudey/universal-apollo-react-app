@@ -3,6 +3,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 import SignUp from "./containers/auth/signUp";
 import Dashboard from "./containers/Dashboard";
+import Home from "./containers/Home";
 import withAuth from "./components/session/withAuth";
 
 const Routes = ({session, refetch, ...props}) => {
@@ -11,7 +12,12 @@ const Routes = ({session, refetch, ...props}) => {
         <Switch>
             <Route 
                 exact
-                path= '/signup'
+                path='/'
+                component={() => <Home />}
+            />
+            <Route 
+                exact
+                path='/signup'
                 render={props => 
                     currentUser 
                     ? <Redirect to='/' /> 
@@ -26,4 +32,4 @@ const Routes = ({session, refetch, ...props}) => {
     )
 };
 
-export default Routes;
+export default withRouter(Routes);

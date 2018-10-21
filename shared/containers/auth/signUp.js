@@ -83,6 +83,10 @@ class SignUp extends Component {
                 <Mutation 
                 mutation={SIGNUP_USER} 
                 variables={{username, email, password, firstName, lastName}} 
+                update={(cache, { data }) => {
+                    console.log("data", data);
+                    console.log("cache", cache);
+                }}
                 >
                     {(signUp, {data, client, loading, error}) => {
                         return(

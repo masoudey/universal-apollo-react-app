@@ -6,10 +6,10 @@ class Header extends Component {
     render() {
         return (
             <header>
-                
+                <NavLink to='/signup'>SignUp</NavLink>
             </header>
         )
     }
 };
 
-export default Header;
+export default withRouter(Header);
