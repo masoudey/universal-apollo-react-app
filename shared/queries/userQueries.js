@@ -9,6 +9,15 @@ export const SIGNUP_USER = gql`
     }
 `;
 
+export const SIGNIN_USER = gql`
+    mutation($email: String!, $password: String!) {
+        signIn(email: $email, password: $password) {
+            token
+            user
+        }
+    }
+`;
+
 export const GET_CURRENT_USER = gql`
     {
         currentUser{
