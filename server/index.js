@@ -73,7 +73,7 @@ app.use(["*/:param", '*'], (req, res) => {
 
     const context = {};
 
-    const App = (
+    const Html = (
         <ApolloProvider client={client} >
             <StaticRouter location={req.url} context={context} >
                 <App />
@@ -81,7 +81,7 @@ app.use(["*/:param", '*'], (req, res) => {
         </ApolloProvider>
     );
 
-    renderToStringWithData(App).then((content) => {
+    renderToStringWithData(Html).then((content) => {
         const initialState = client.extract();
         const helmet = Helmet.renderStatic();
 

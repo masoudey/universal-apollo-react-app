@@ -30,7 +30,7 @@ export const resolvers = {
                 lastName,
                 userImage,
                 __typename: "User",
-            },
+            };
 
             const data = {
                 users: users.concat([newData])

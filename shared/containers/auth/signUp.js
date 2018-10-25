@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter, Link } from "react-router-dom";
 import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
 import * as Cookies from "es-cookie";
 import { Helmet } from "react-helmet";
 

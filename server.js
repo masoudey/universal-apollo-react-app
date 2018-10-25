@@ -160,13 +160,69 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _templateObject = _taggedTemplateLiteral(["\n    extend type Query {\n        me: User\n        user(id: ID!): User\n        users: [User!]\n    }\n\n    extend type Mutation {\n        signUp(\n            username: String!\n            email: String!\n            password: String!\n            firstName: String! \n            lastName: String!\n            profileImage: String\n        ): Token!\n        signIn(email: String!, password: String!): Token!\n        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!\n        deleteUser(id: ID!): Boolean!\n        setUserImage(email: String!, userImage: String!): User!\n        changeEmail(currentEmail: String!, newEmail: String!): User!\n        changePassword(email: String!, password: String!): User!\n        passwordReset(email: String!): User! \n    }\n\n    type Token {\n        token: String!\n    }\n\n    type User {\n        _id: ID!\n        username: String!\n        password: String!\n        email: String!\n        firstName: String! \n        lastName: String!\n        bio: String\n        userImage: String\n        rol: String\n        createdAt: String!\n        posts: [Post!]\n    }\n"], ["\n    extend type Query {\n        me: User\n        user(id: ID!): User\n        users: [User!]\n    }\n\n    extend type Mutation {\n        signUp(\n            username: String!\n            email: String!\n            password: String!\n            firstName: String! \n            lastName: String!\n            profileImage: String\n        ): Token!\n        signIn(email: String!, password: String!): Token!\n        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!\n        deleteUser(id: ID!): Boolean!\n        setUserImage(email: String!, userImage: String!): User!\n        changeEmail(currentEmail: String!, newEmail: String!): User!\n        changePassword(email: String!, password: String!): User!\n        passwordReset(email: String!): User! \n    }\n\n    type Token {\n        token: String!\n    }\n\n    type User {\n        _id: ID!\n        username: String!\n        password: String!\n        email: String!\n        firstName: String! \n        lastName: String!\n        bio: String\n        userImage: String\n        rol: String\n        createdAt: String!\n        posts: [Post!]\n    }\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n    extend type Query {\n        currentUser: User\n        user(id: ID!): User\n        users: [User!]\n    }\n\n    extend type Mutation {\n        signUp(\n            username: String!\n            email: String!\n            password: String!\n            firstName: String! \n            lastName: String!\n            profileImage: String\n        ): AuthPayload!\n        signIn(email: String!, password: String!): AuthPayload!\n        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!\n        deleteUser(id: ID!): Boolean!\n        setUserImage(email: String!, userImage: String!): User!\n        changeEmail(currentEmail: String!, newEmail: String!): User!\n        changePassword(email: String!, password: String!): User!\n        passwordReset(email: String!): User! \n    }\n\n    type AuthPayload {\n        token: String!\n        user: User!\n    }\n\n    type User {\n        _id: ID!\n        username: String!\n        password: String!\n        email: String!\n        firstName: String! \n        lastName: String!\n        bio: String\n        userImage: String\n        rol: String\n        createdAt: String!\n        posts: [Post!]\n    }\n"], ["\n    extend type Query {\n        currentUser: User\n        user(id: ID!): User\n        users: [User!]\n    }\n\n    extend type Mutation {\n        signUp(\n            username: String!\n            email: String!\n            password: String!\n            firstName: String! \n            lastName: String!\n            profileImage: String\n        ): AuthPayload!\n        signIn(email: String!, password: String!): AuthPayload!\n        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!\n        deleteUser(id: ID!): Boolean!\n        setUserImage(email: String!, userImage: String!): User!\n        changeEmail(currentEmail: String!, newEmail: String!): User!\n        changePassword(email: String!, password: String!): User!\n        passwordReset(email: String!): User! \n    }\n\n    type AuthPayload {\n        token: String!\n        user: User!\n    }\n\n    type User {\n        _id: ID!\n        username: String!\n        password: String!\n        email: String!\n        firstName: String! \n        lastName: String!\n        bio: String\n        userImage: String\n        rol: String\n        createdAt: String!\n        posts: [Post!]\n    }\n"]);
 
 var _apolloServerExpress = __webpack_require__(/*! apollo-server-express */ "apollo-server-express");
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 exports.default = (0, _apolloServerExpress.gql)(_templateObject);
+
+/***/ }),
+
+/***/ "./server/helpers/renderer.js":
+/*!************************************!*\
+  !*** ./server/helpers/renderer.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _webConfig = __webpack_require__(/*! ../../webConfig */ "./webConfig.json");
+
+var _webConfig2 = _interopRequireDefault(_webConfig);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var HTML = function HTML(_ref) {
+    var content = _ref.content,
+        state = _ref.state,
+        helmet = _ref.helmet;
+
+    var htmlAttrs = helmet.htmlAttributes.toComponent();
+    var bodyAttrs = helmet.bodyAttributes.toComponent();
+
+    return _react2.default.createElement(
+        "html",
+        _extends({ lang: "en" }, htmlAttrs),
+        _react2.default.createElement("head", { dangerouslySetInnerHTML: {
+                __html: helmet.title.toString() + "\n            <meta charset=\"UTF-8\">\n            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n            <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n            " + helmet.meta.toString() + "\n            <link rel=\"shortcut icon\" href=\"" + _webConfig2.default.siteURL + "/assets/graphics/favicon.ico\">\n            <link href=\"" + _webConfig2.default.siteURL + "/styles.min.css\" rel=\"stylesheet\" type=\"text/css\" />\n            <link href=\"https://fonts.googleapis.com/css?family=Lato:400,700\" rel=\"stylesheet\" />\n            <link rel=\"stylesheet\" href=\"https://use.fontawesome.com/releases/v5.2.0/css/all.css\" integrity=\"sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ\" crossOrigin=\"anonymous\" />\n            " } }),
+        _react2.default.createElement(
+            "body",
+            bodyAttrs,
+            _react2.default.createElement("div", { id: "root", dangerouslySetInnerHTML: { __html: content } }),
+            _react2.default.createElement("script", { dangerouslySetInnerHTML: {
+                    __html: "window.__APOLLO_STATE__=" + JSON.stringify(state).replace(/</g, "\\u003c") + ";"
+                } }),
+            _react2.default.createElement("script", { src: "https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js" }),
+            _react2.default.createElement("script", { src: _webConfig2.default.siteURL + "/client_bundle.js" })
+        )
+    );
+};
+
+exports.default = HTML;
 
 /***/ }),
 
@@ -238,9 +294,11 @@ var _reactApollo = __webpack_require__(/*! react-apollo */ "react-apollo");
 
 var _apolloClient = __webpack_require__(/*! apollo-client */ "apollo-client");
 
-var _apolloLinkHttp = __webpack_require__(/*! apollo-link-http */ "apollo-link-http");
+var _apolloLinkSchema = __webpack_require__(/*! apollo-link-schema */ "apollo-link-schema");
 
 var _apolloCacheInmemory = __webpack_require__(/*! apollo-cache-inmemory */ "apollo-cache-inmemory");
+
+var _graphqlTools = __webpack_require__(/*! graphql-tools */ "graphql-tools");
 
 var _mongoose = __webpack_require__(/*! mongoose */ "mongoose");
 
@@ -255,6 +313,14 @@ var _dataloader2 = _interopRequireDefault(_dataloader);
 var _webConfig = __webpack_require__(/*! ../webConfig */ "./webConfig.json");
 
 var _webConfig2 = _interopRequireDefault(_webConfig);
+
+var _renderer = __webpack_require__(/*! ./helpers/renderer */ "./server/helpers/renderer.js");
+
+var _renderer2 = _interopRequireDefault(_renderer);
+
+var _app = __webpack_require__(/*! ../shared/app */ "./shared/app.js");
+
+var _app2 = _interopRequireDefault(_app);
 
 var _Schema = __webpack_require__(/*! ./Schema */ "./server/Schema/index.js");
 
@@ -299,8 +365,44 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.use((0, _cookieParser2.default)());
 app.use('/', _express2.default.static('public'));
+app.use(["*/:param", '*'], function (req, res) {
+    var URL_Param = req.params.param ? req.params.param : null;
 
-var getMe = function () {
+    var schema = (0, _graphqlTools.makeExecutableSchema)({
+        typeDefs: _Schema2.default,
+        resolvers: _resolvers2.default
+    });
+    var client = new _apolloClient.ApolloClient({
+        ssrMode: true,
+        link: new _apolloLinkSchema.SchemaLink({ schema: schema }),
+        cache: new _apolloCacheInmemory.InMemoryCache()
+    });
+
+    var context = {};
+
+    var Html = _react2.default.createElement(
+        _reactApollo.ApolloProvider,
+        { client: client },
+        _react2.default.createElement(
+            _reactRouterDom.StaticRouter,
+            { location: req.url, context: context },
+            _react2.default.createElement(_app2.default, null)
+        )
+    );
+
+    (0, _reactApollo.renderToStringWithData)(Html).then(function (content) {
+        var initialState = client.extract();
+        var helmet = _reactHelmet.Helmet.renderStatic();
+
+        var html = _react2.default.createElement(_renderer2.default, { content: content, state: initialState, helmet: helmet });
+
+        res.status(200);
+        res.send('<!doctype html>\n' + (0, _server.renderToStaticMarkup)(html));
+        res.end();
+    });
+});
+
+var getCurrentUser = function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req) {
         var token;
         return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -334,7 +436,7 @@ var getMe = function () {
         }, _callee, undefined, [[2, 8]]);
     }));
 
-    return function getMe(_x) {
+    return function getCurrentUser(_x) {
         return _ref.apply(this, arguments);
     };
 }();
@@ -352,7 +454,7 @@ var apollo = new _apolloServerExpress.ApolloServer({
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_ref3) {
             var req = _ref3.req,
                 connection = _ref3.connection;
-            var me;
+            var currentUser;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
@@ -372,8 +474,8 @@ var apollo = new _apolloServerExpress.ApolloServer({
                                 break;
                             }
 
-                            // const me = await getMe(req);
-                            me = {
+                            // const currentUser = await getCurrentUser(req);
+                            currentUser = {
                                 "_id": {
                                     "$oid": "5ba9f7a39dab691ef4af9ff2"
                                 },
@@ -390,7 +492,7 @@ var apollo = new _apolloServerExpress.ApolloServer({
                             };
                             return _context2.abrupt('return', {
                                 models: _models2.default,
-                                me: me,
+                                currentUser: currentUser,
                                 secret: process.env.JWT_SECRET
                             });
 
@@ -1108,15 +1210,15 @@ exports.default = {
             };
         }(),
 
-        me: function () {
+        currentUser: function () {
             var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(parent, args, _ref10) {
                 var models = _ref10.models,
-                    _me = _ref10.me;
+                    _currentUser = _ref10.currentUser;
                 return regeneratorRuntime.wrap(function _callee6$(_context6) {
                     while (1) {
                         switch (_context6.prev = _context6.next) {
                             case 0:
-                                if (_me) {
+                                if (_currentUser) {
                                     _context6.next = 2;
                                     break;
                                 }
@@ -1125,7 +1227,7 @@ exports.default = {
 
                             case 2:
                                 _context6.next = 4;
-                                return models.User.findById(_me.id);
+                                return models.User.findById(_currentUser.id);
 
                             case 4:
                                 return _context6.abrupt("return", _context6.sent);
@@ -1138,7 +1240,7 @@ exports.default = {
                 }, _callee6, undefined);
             }));
 
-            return function me(_x11, _x12, _x13) {
+            return function currentUser(_x11, _x12, _x13) {
                 return _ref9.apply(this, arguments);
             };
         }()
@@ -1185,7 +1287,10 @@ exports.default = {
 
                             case 7:
                                 newUser = _context7.sent;
-                                return _context7.abrupt("return", { token: createToken(newUser, secret, '30m') });
+                                return _context7.abrupt("return", {
+                                    token: createToken(newUser, secret, '30m'),
+                                    newUser: newUser
+                                });
 
                             case 9:
                             case "end":
@@ -1239,7 +1344,10 @@ exports.default = {
                                 throw new _apolloServer.AuthenticationError('Invalid password');
 
                             case 10:
-                                return _context8.abrupt("return", { token: createToken(user, secret, '30m') });
+                                return _context8.abrupt("return", {
+                                    token: createToken(user, secret, '30m'),
+                                    user: user
+                                });
 
                             case 11:
                             case "end":
@@ -1260,7 +1368,7 @@ exports.default = {
                     firstName = _ref18.firstName,
                     lastName = _ref18.lastName;
                 var models = _ref19.models,
-                    me = _ref19.me;
+                    currentUser = _ref19.currentUser;
                 var user;
                 return regeneratorRuntime.wrap(function _callee9$(_context9) {
                     while (1) {
@@ -1325,7 +1433,7 @@ exports.default = {
                 var email = _ref24.email,
                     userImage = _ref24.userImage;
                 var models = _ref25.models,
-                    me = _ref25.me;
+                    currentUser = _ref25.currentUser;
                 var user;
                 return regeneratorRuntime.wrap(function _callee11$(_context11) {
                     while (1) {
@@ -1576,6 +1684,748 @@ var CREATED = exports.CREATED = 'CREATED';
 
 /***/ }),
 
+/***/ "./shared/app.js":
+/*!***********************!*\
+  !*** ./shared/app.js ***!
+  \***********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+var _withSession = __webpack_require__(/*! ./components/session/withSession */ "./shared/components/session/withSession.js");
+
+var _withSession2 = _interopRequireDefault(_withSession);
+
+var _routes = __webpack_require__(/*! ./routes */ "./shared/routes.js");
+
+var _routes2 = _interopRequireDefault(_routes);
+
+var _Header = __webpack_require__(/*! ./components/Header */ "./shared/components/Header.js");
+
+var _Header2 = _interopRequireDefault(_Header);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var App = function (_Component) {
+    _inherits(App, _Component);
+
+    function App(props) {
+        _classCallCheck(this, App);
+
+        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+    }
+
+    _createClass(App, [{
+        key: "render",
+        value: function render() {
+            var session = this.props.session;
+            return _react2.default.createElement(
+                _react.Fragment,
+                null,
+                _react2.default.createElement(_Header2.default, { session: session }),
+                _react2.default.createElement(
+                    "main",
+                    null,
+                    _react2.default.createElement(_routes2.default, { session: session })
+                )
+            );
+        }
+    }]);
+
+    return App;
+}(_react.Component);
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _withSession2.default)(App));
+
+/***/ }),
+
+/***/ "./shared/components/Header.js":
+/*!*************************************!*\
+  !*** ./shared/components/Header.js ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Header = function (_Component) {
+    _inherits(Header, _Component);
+
+    function Header() {
+        _classCallCheck(this, Header);
+
+        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+    }
+
+    _createClass(Header, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "header",
+                null,
+                _react2.default.createElement(
+                    _reactRouterDom.NavLink,
+                    { to: "/signup" },
+                    "SignUp"
+                )
+            );
+        }
+    }]);
+
+    return Header;
+}(_react.Component);
+
+;
+
+exports.default = (0, _reactRouterDom.withRouter)(Header);
+
+/***/ }),
+
+/***/ "./shared/components/session/withAuth.js":
+/*!***********************************************!*\
+  !*** ./shared/components/session/withAuth.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+var _reactApollo = __webpack_require__(/*! react-apollo */ "react-apollo");
+
+var _userQueries = __webpack_require__(/*! ../../queries/userQueries */ "./shared/queries/userQueries.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var withAuth = function withAuth(conditionFn) {
+    return function (Component) {
+        return function (props) {
+            return _react2.default.createElement(
+                _reactApollo.Query,
+                { query: _userQueries.GET_CURRENT_USER, notifyOnNetworkStatusChange: true },
+                function (_ref) {
+                    var data = _ref.data,
+                        loading = _ref.loading,
+                        networkStatus = _ref.networkStatus;
+
+                    if (networkStatus !== 7) {
+                        return null;
+                    };
+
+                    return conditionFn(data) ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: "/signin" });
+                }
+            );
+        };
+    };
+};
+
+exports.default = withAuth;
+
+/***/ }),
+
+/***/ "./shared/components/session/withSession.js":
+/*!**************************************************!*\
+  !*** ./shared/components/session/withSession.js ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactApollo = __webpack_require__(/*! react-apollo */ "react-apollo");
+
+var _userQueries = __webpack_require__(/*! ../../queries/userQueries */ "./shared/queries/userQueries.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var withSession = function withSession(Component) {
+    return function (props) {
+        return _react2.default.createElement(
+            _reactApollo.Query,
+            { query: _userQueries.GET_CURRENT_USER },
+            function (_ref) {
+                var data = _ref.data,
+                    refetch = _ref.refetch;
+                return _react2.default.createElement(Component, _extends({}, props, { session: data, refetch: refetch }));
+            }
+        );
+    };
+};
+
+exports.default = withSession;
+
+/***/ }),
+
+/***/ "./shared/containers/Dashboard.js":
+/*!****************************************!*\
+  !*** ./shared/containers/Dashboard.js ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Dashboard = function Dashboard() {
+    return _react2.default.createElement(
+        "h1",
+        null,
+        "Dashboard"
+    );
+};
+
+exports.default = Dashboard;
+
+/***/ }),
+
+/***/ "./shared/containers/Home.js":
+/*!***********************************!*\
+  !*** ./shared/containers/Home.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Home = function Home(_ref) {
+    var session = _ref.session;
+
+
+    return _react2.default.createElement(
+        _react.Fragment,
+        null,
+        _react2.default.createElement(
+            "h1",
+            null,
+            "Home"
+        )
+    );
+};
+
+exports.default = Home;
+
+/***/ }),
+
+/***/ "./shared/containers/auth/signUp.js":
+/*!******************************************!*\
+  !*** ./shared/containers/auth/signUp.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.SIGNUP_USER = undefined;
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _templateObject = _taggedTemplateLiteral(["\n    mutation($username: String!, $email: String!, $password: String!, $firstName: String!, $lastName: String!, $profileImage: String) {\n        signUp(username: $username, email: $email, password: $password, firstName: $firstName, lastName: $lastName, profileImage:$profileImage) {\n            token\n            user\n        }\n    }\n"], ["\n    mutation($username: String!, $email: String!, $password: String!, $firstName: String!, $lastName: String!, $profileImage: String) {\n        signUp(username: $username, email: $email, password: $password, firstName: $firstName, lastName: $lastName, profileImage:$profileImage) {\n            token\n            user\n        }\n    }\n"]);
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+var _reactApollo = __webpack_require__(/*! react-apollo */ "react-apollo");
+
+var _graphqlTag = __webpack_require__(/*! graphql-tag */ "graphql-tag");
+
+var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
+
+var _esCookie = __webpack_require__(/*! es-cookie */ "es-cookie");
+
+var Cookies = _interopRequireWildcard(_esCookie);
+
+var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var SIGNUP_USER = exports.SIGNUP_USER = (0, _graphqlTag2.default)(_templateObject);
+
+var initialState = {
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    firstName: '',
+    lastName: '',
+    passwordMatch: '',
+    error: ''
+};
+
+var SignUp = function (_Component) {
+    _inherits(SignUp, _Component);
+
+    function SignUp(props) {
+        var _this2 = this;
+
+        _classCallCheck(this, SignUp);
+
+        var _this = _possibleConstructorReturn(this, (SignUp.__proto__ || Object.getPrototypeOf(SignUp)).call(this, props));
+
+        _this.onChange = function (e) {
+            var _e$target = e.target,
+                name = _e$target.name,
+                value = _e$target.value;
+
+            _this.setState(_defineProperty({}, name, value));
+        };
+
+        _this.handleSubmit = function (e, signUp, client) {
+            e.preventDefault();
+            console.log(client);
+            signUp().then(function () {
+                var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref2) {
+                    var data = _ref2.data;
+                    return regeneratorRuntime.wrap(function _callee$(_context) {
+                        while (1) {
+                            switch (_context.prev = _context.next) {
+                                case 0:
+                                    Cookies.set('token', data.signUp.token);
+                                    _context.next = 3;
+                                    return _this.props.refresh();
+
+                                case 3:
+                                    _this.setState(_extends({}, initialState));
+                                    _this.props.history.push('/');
+
+                                case 5:
+                                case "end":
+                                    return _context.stop();
+                            }
+                        }
+                    }, _callee, _this2);
+                }));
+
+                return function (_x) {
+                    return _ref.apply(this, arguments);
+                };
+            }()).catch(function (error) {
+                _this.setState({
+                    error: 'Either your email or username is already taken'
+                });
+            });
+        };
+
+        _this.confirmPW = function () {
+            var _this$state = _this.state,
+                password = _this$state.password,
+                passwordConfirm = _this$state.passwordConfirm;
+
+            var isMatch = password !== passwordConfirm;
+            _this.setState({
+                passwordMatch: isMatch
+            });
+        };
+
+        _this.validateForm = function () {
+            var _this$state2 = _this.state,
+                firstName = _this$state2.firstName,
+                lastName = _this$state2.lastName,
+                email = _this$state2.email,
+                userName = _this$state2.userName,
+                password = _this$state2.password,
+                passwordConfirm = _this$state2.passwordConfirm;
+
+            var isInvalid = !firstName || !lastName || !email || !userName || !password || password !== passwordConfirm;
+            return isInvalid;
+        };
+
+        _this.state = _extends({}, initialState);
+        return _this;
+    }
+
+    _createClass(SignUp, [{
+        key: "head",
+        value: function head() {
+            return _react2.default.createElement(
+                _reactHelmet.Helmet,
+                { bodyAttributes: { class: 'signUp' } },
+                _react2.default.createElement(
+                    "title",
+                    null,
+                    "Join now - Apollo React App"
+                )
+            );
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this3 = this;
+
+            var _state = this.state,
+                username = _state.username,
+                email = _state.email,
+                password = _state.password,
+                passwordConfirm = _state.passwordConfirm,
+                firstName = _state.firstName,
+                lastName = _state.lastName;
+
+
+            return _react2.default.createElement(
+                "div",
+                { className: "login-wrapper" },
+                this.head(),
+                _react2.default.createElement(
+                    "span",
+                    { className: "title" },
+                    "SignUp"
+                ),
+                _react2.default.createElement(
+                    _reactApollo.Mutation,
+                    {
+                        mutation: SIGNUP_USER,
+                        variables: { username: username, email: email, password: password, firstName: firstName, lastName: lastName },
+                        update: function update(cache, _ref3) {
+                            var data = _ref3.data;
+
+                            console.log("data", data);
+                            console.log("cache", cache);
+                        }
+                    },
+                    function (signUp, _ref4) {
+                        var data = _ref4.data,
+                            client = _ref4.client,
+                            loading = _ref4.loading,
+                            error = _ref4.error;
+
+                        return _react2.default.createElement(
+                            "form",
+                            { name: "form", onSubmit: function onSubmit(e) {
+                                    return _this3.handleSubmit(e, signUp, client);
+                                } },
+                            _react2.default.createElement(
+                                "fieldset",
+                                null,
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "inputrow" },
+                                    _react2.default.createElement("i", { className: "fa icon-user fa-fw" }),
+                                    _react2.default.createElement("input", {
+                                        type: "text",
+                                        name: "username",
+                                        id: "username",
+                                        placeholder: "UserName",
+                                        onChange: _this3.handleChange,
+                                        onBlur: _this3.validateForm,
+                                        value: username,
+                                        autoFocus: true,
+                                        required: true
+                                    })
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "inputrow" },
+                                    _react2.default.createElement("i", { className: "fa icon-user fa-fw" }),
+                                    _react2.default.createElement("input", {
+                                        type: "text",
+                                        name: "firstName",
+                                        id: "firstName",
+                                        placeholder: "FirstName",
+                                        onChange: _this3.handleChange,
+                                        value: firstName,
+                                        required: true
+                                    })
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "inputrow" },
+                                    _react2.default.createElement("i", { className: "fa icon-user fa-fw" }),
+                                    _react2.default.createElement("input", {
+                                        type: "text",
+                                        name: "lastName",
+                                        id: "lastName",
+                                        placeholder: "LastName",
+                                        onChange: _this3.handleChange,
+                                        value: lastName,
+                                        required: true
+                                    })
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "inputrow" },
+                                    _react2.default.createElement("i", { className: "fa icon-mail4 fa-fw" }),
+                                    _react2.default.createElement("input", {
+                                        type: "email",
+                                        name: "email",
+                                        id: "email",
+                                        placeholder: "Email",
+                                        onChange: _this3.handleChange,
+                                        value: email,
+                                        required: true
+                                    })
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "inputrow" },
+                                    _react2.default.createElement("i", { className: "fa icon-key fa-fw" }),
+                                    _react2.default.createElement("input", {
+                                        type: "password",
+                                        name: "password",
+                                        id: "password",
+                                        "data-typetoggle": "#show",
+                                        onChange: _this3.handleChange,
+                                        value: password,
+                                        placeholder: "Password",
+                                        required: true
+                                    })
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "inputrow" },
+                                    _react2.default.createElement("i", { className: "fa icon-key fa-fw" }),
+                                    _react2.default.createElement("input", {
+                                        type: "password",
+                                        name: "passwordConfirm",
+                                        id: "passwordConfirm",
+                                        "data-typetoggle": "#show",
+                                        onChange: _this3.handleChange,
+                                        onBlur: _this3.confirmPW,
+                                        value: passwordConfirm,
+                                        placeholder: "Confirm Password",
+                                        required: true
+                                    })
+                                ),
+                                _react2.default.createElement(
+                                    "div",
+                                    { className: "button-center" },
+                                    _react2.default.createElement(
+                                        "button",
+                                        { className: "btn-log", type: "submit", id: "submit", disabled: passwordMatch || _this3.validateForm() },
+                                        "Register"
+                                    ),
+                                    loading && _react2.default.createElement("img", { src: "data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" })
+                                )
+                            )
+                        );
+                    }
+                )
+            );
+        }
+    }]);
+
+    return SignUp;
+}(_react.Component);
+
+exports.default = (0, _reactRouterDom.withRouter)(SignUp);
+
+/***/ }),
+
+/***/ "./shared/queries/userQueries.js":
+/*!***************************************!*\
+  !*** ./shared/queries/userQueries.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.GET_CLIENT_USER = exports.GET_CURRENT_USER = undefined;
+
+var _templateObject = _taggedTemplateLiteral(["\n    {\n        currentUser{\n            id\n            username\n            email\n            role\n        }\n    }\n"], ["\n    {\n        currentUser{\n            id\n            username\n            email\n            role\n        }\n    }\n"]),
+    _templateObject2 = _taggedTemplateLiteral(["\n    {\n        currentUser @client{\n            id\n            username\n            email\n            role\n        }\n    }\n"], ["\n    {\n        currentUser @client{\n            id\n            username\n            email\n            role\n        }\n    }\n"]);
+
+var _graphqlTag = __webpack_require__(/*! graphql-tag */ "graphql-tag");
+
+var _graphqlTag2 = _interopRequireDefault(_graphqlTag);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
+
+var GET_CURRENT_USER = exports.GET_CURRENT_USER = (0, _graphqlTag2.default)(_templateObject);
+
+var GET_CLIENT_USER = exports.GET_CLIENT_USER = (0, _graphqlTag2.default)(_templateObject2);
+
+/***/ }),
+
+/***/ "./shared/routes.js":
+/*!**************************!*\
+  !*** ./shared/routes.js ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
+
+var _signUp = __webpack_require__(/*! ./containers/auth/signUp */ "./shared/containers/auth/signUp.js");
+
+var _signUp2 = _interopRequireDefault(_signUp);
+
+var _Dashboard = __webpack_require__(/*! ./containers/Dashboard */ "./shared/containers/Dashboard.js");
+
+var _Dashboard2 = _interopRequireDefault(_Dashboard);
+
+var _Home = __webpack_require__(/*! ./containers/Home */ "./shared/containers/Home.js");
+
+var _Home2 = _interopRequireDefault(_Home);
+
+var _withAuth = __webpack_require__(/*! ./components/session/withAuth */ "./shared/components/session/withAuth.js");
+
+var _withAuth2 = _interopRequireDefault(_withAuth);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var Routes = function Routes(_ref) {
+    var session = _ref.session,
+        refetch = _ref.refetch,
+        props = _objectWithoutProperties(_ref, ["session", "refetch"]);
+
+    var currentUser = session.currentUser;
+    return _react2.default.createElement(
+        _reactRouterDom.Switch,
+        null,
+        _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: "/",
+            component: function component() {
+                return _react2.default.createElement(_Home2.default, null);
+            }
+        }),
+        _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: "/signup",
+            render: function render(props) {
+                return currentUser ? _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" }) : _react2.default.createElement(_signUp2.default, _extends({}, props, { refetch: refetch }));
+            }
+        }),
+        _react2.default.createElement(_reactRouterDom.Route, {
+            exact: true,
+            path: "/dashboard",
+            render: (0, _withAuth2.default)(function (session) {
+                return session && session.currentUser;
+            })(_Dashboard2.default)
+        })
+    );
+};
+
+exports.default = (0, _reactRouterDom.withRouter)(Routes);
+
+/***/ }),
+
 /***/ "./webConfig.json":
 /*!************************!*\
   !*** ./webConfig.json ***!
@@ -1609,14 +2459,14 @@ module.exports = require("apollo-client");
 
 /***/ }),
 
-/***/ "apollo-link-http":
-/*!***********************************!*\
-  !*** external "apollo-link-http" ***!
-  \***********************************/
+/***/ "apollo-link-schema":
+/*!*************************************!*\
+  !*** external "apollo-link-schema" ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = require("apollo-link-http");
+module.exports = require("apollo-link-schema");
 
 /***/ }),
 
@@ -1730,6 +2580,17 @@ module.exports = require("dotenv/config");
 
 /***/ }),
 
+/***/ "es-cookie":
+/*!****************************!*\
+  !*** external "es-cookie" ***!
+  \****************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("es-cookie");
+
+/***/ }),
+
 /***/ "express":
 /*!**************************!*\
   !*** external "express" ***!
@@ -1771,6 +2632,28 @@ module.exports = require("generate-password");
 /***/ (function(module, exports) {
 
 module.exports = require("graphql-resolvers");
+
+/***/ }),
+
+/***/ "graphql-tag":
+/*!******************************!*\
+  !*** external "graphql-tag" ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("graphql-tag");
+
+/***/ }),
+
+/***/ "graphql-tools":
+/*!********************************!*\
+  !*** external "graphql-tools" ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = require("graphql-tools");
 
 /***/ }),
 

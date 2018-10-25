@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
+import gql from "graphql-tag";
 import * as Cookies from "es-cookie";
 
 import { Helmet } from "react-helmet";
@@ -134,4 +135,4 @@ class SignIn extends Component {
     }
 };
 
-export default SignIn;
+export default withRouter(SignIn);
