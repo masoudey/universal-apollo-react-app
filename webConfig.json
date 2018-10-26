@@ -1,4 +1,4 @@
 {
-    "siteURL": "http://localhost:3000",
+    "siteURL": "http://localhost:5000",
     "environment": "development"
 }

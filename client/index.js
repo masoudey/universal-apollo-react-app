@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { hydrate } from "react-dom";
 import { ApolloClient } from "apollo-client";
 import { getMainDefinition } from "apollo-utilities";
@@ -91,9 +91,9 @@ const root = document.getElementById('root');
 
 hydrate(
     <ApolloProvider client={client} >
-        <BrowserRouter history={history}>
+        <Router history={history}>
             <App />
-        </BrowserRouter>
+        </Router>
     </ApolloProvider>,
     root
 );

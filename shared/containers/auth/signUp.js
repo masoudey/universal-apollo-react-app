@@ -84,6 +84,7 @@ class SignUp extends Component {
             passwordConfirm,
             firstName,
             lastName,
+            passwordMatch
         } = this.state;
 
         return (
@@ -110,7 +111,7 @@ class SignUp extends Component {
                                         name="username"
                                         id="username"
                                         placeholder="UserName"
-                                        onChange={this.handleChange}
+                                        onChange={this.onChange}
                                         onBlur={this.validateForm}
                                         value={username}
                                         autoFocus
@@ -124,7 +125,7 @@ class SignUp extends Component {
                                         name="firstName"
                                         id="firstName"
                                         placeholder="FirstName"
-                                        onChange={this.handleChange}
+                                        onChange={this.onChange}
                                         value={firstName}
                                         required
                                         />
@@ -136,7 +137,7 @@ class SignUp extends Component {
                                         name="lastName"
                                         id="lastName"
                                         placeholder="LastName"
-                                        onChange={this.handleChange}
+                                        onChange={this.onChange}
                                         value={lastName}
                                         required
                                         />
@@ -148,7 +149,7 @@ class SignUp extends Component {
                                         name="email"
                                         id="email"
                                         placeholder="Email"
-                                        onChange={this.handleChange}
+                                        onChange={this.onChange}
                                         value={email}
                                         required
                                         />
@@ -160,7 +161,7 @@ class SignUp extends Component {
                                         name="password"
                                         id="password"
                                         data-typetoggle="#show"
-                                        onChange={this.handleChange}
+                                        onChange={this.onChange}
                                         value={password}
                                         placeholder="Password"
                                         required
@@ -173,7 +174,7 @@ class SignUp extends Component {
                                         name="passwordConfirm"
                                         id="passwordConfirm"
                                         data-typetoggle="#show"
-                                        onChange={this.handleChange}
+                                        onChange={this.onChange}
                                         onBlur={this.confirmPW}
                                         value={passwordConfirm}
                                         placeholder="Confirm Password"

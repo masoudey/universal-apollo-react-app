@@ -7,7 +7,7 @@ import Home from "./containers/Home";
 import withAuth from "./components/session/withAuth";
 
 const Routes = ({session, refetch, ...props}) => {
-    const currentUser = session.currentUser;
+    const currentUser = session ? session.currentUser : null;
     return (
         <Switch>
             <Route 

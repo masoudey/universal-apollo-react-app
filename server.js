@@ -217,7 +217,7 @@ var HTML = function HTML(_ref) {
                     __html: "window.__APOLLO_STATE__=" + JSON.stringify(state).replace(/</g, "\\u003c") + ";"
                 } }),
             _react2.default.createElement("script", { src: "https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js" }),
-            _react2.default.createElement("script", { src: _webConfig2.default.siteURL + "/client_bundle.js" })
+            _react2.default.createElement("script", { src: _webConfig2.default.siteURL + "/bundle.js" })
         )
     );
 };
@@ -383,11 +383,7 @@ app.use(["*/:param", '*'], function (req, res) {
     var Html = _react2.default.createElement(
         _reactApollo.ApolloProvider,
         { client: client },
-        _react2.default.createElement(
-            _reactRouterDom.StaticRouter,
-            { location: req.url, context: context },
-            _react2.default.createElement(_app2.default, null)
-        )
+        _react2.default.createElement(_reactRouterDom.StaticRouter, { location: req.url, context: context })
     );
 
     (0, _reactApollo.renderToStringWithData)(Html).then(function (content) {
@@ -2163,7 +2159,8 @@ var SignUp = function (_Component) {
                 password = _state.password,
                 passwordConfirm = _state.passwordConfirm,
                 firstName = _state.firstName,
-                lastName = _state.lastName;
+                lastName = _state.lastName,
+                passwordMatch = _state.passwordMatch;
 
 
             return _react2.default.createElement(
@@ -2210,7 +2207,7 @@ var SignUp = function (_Component) {
                                         name: "username",
                                         id: "username",
                                         placeholder: "UserName",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         onBlur: _this3.validateForm,
                                         value: username,
                                         autoFocus: true,
@@ -2226,7 +2223,7 @@ var SignUp = function (_Component) {
                                         name: "firstName",
                                         id: "firstName",
                                         placeholder: "FirstName",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         value: firstName,
                                         required: true
                                     })
@@ -2240,7 +2237,7 @@ var SignUp = function (_Component) {
                                         name: "lastName",
                                         id: "lastName",
                                         placeholder: "LastName",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         value: lastName,
                                         required: true
                                     })
@@ -2254,7 +2251,7 @@ var SignUp = function (_Component) {
                                         name: "email",
                                         id: "email",
                                         placeholder: "Email",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         value: email,
                                         required: true
                                     })
@@ -2268,7 +2265,7 @@ var SignUp = function (_Component) {
                                         name: "password",
                                         id: "password",
                                         "data-typetoggle": "#show",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         value: password,
                                         placeholder: "Password",
                                         required: true
@@ -2283,7 +2280,7 @@ var SignUp = function (_Component) {
                                         name: "passwordConfirm",
                                         id: "passwordConfirm",
                                         "data-typetoggle": "#show",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         onBlur: _this3.confirmPW,
                                         value: passwordConfirm,
                                         placeholder: "Confirm Password",
@@ -2394,7 +2391,7 @@ var Routes = function Routes(_ref) {
         refetch = _ref.refetch,
         props = _objectWithoutProperties(_ref, ["session", "refetch"]);
 
-    var currentUser = session.currentUser;
+    var currentUser = session ? session.currentUser : null;
     return _react2.default.createElement(
         _reactRouterDom.Switch,
         null,
@@ -2433,7 +2430,7 @@ exports.default = (0, _reactRouterDom.withRouter)(Routes);
 /*! exports provided: siteURL, environment, default */
 /***/ (function(module) {
 
-module.exports = {"siteURL":"http://localhost:3000","environment":"development"};
+module.exports = {"siteURL":"http://localhost:5000","environment":"development"};
 
 /***/ }),
 

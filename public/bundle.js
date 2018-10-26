@@ -224,7 +224,7 @@ var root = document.getElementById('root');
     _reactApollo.ApolloProvider,
     { client: client },
     _react2.default.createElement(
-        _reactRouterDom.BrowserRouter,
+        _reactRouterDom.Router,
         { history: history },
         _react2.default.createElement(_app2.default, null)
     )
@@ -62373,7 +62373,8 @@ var SignUp = function (_Component) {
                 password = _state.password,
                 passwordConfirm = _state.passwordConfirm,
                 firstName = _state.firstName,
-                lastName = _state.lastName;
+                lastName = _state.lastName,
+                passwordMatch = _state.passwordMatch;
 
 
             return _react2.default.createElement(
@@ -62420,7 +62421,7 @@ var SignUp = function (_Component) {
                                         name: "username",
                                         id: "username",
                                         placeholder: "UserName",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         onBlur: _this3.validateForm,
                                         value: username,
                                         autoFocus: true,
@@ -62436,7 +62437,7 @@ var SignUp = function (_Component) {
                                         name: "firstName",
                                         id: "firstName",
                                         placeholder: "FirstName",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         value: firstName,
                                         required: true
                                     })
@@ -62450,7 +62451,7 @@ var SignUp = function (_Component) {
                                         name: "lastName",
                                         id: "lastName",
                                         placeholder: "LastName",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         value: lastName,
                                         required: true
                                     })
@@ -62464,7 +62465,7 @@ var SignUp = function (_Component) {
                                         name: "email",
                                         id: "email",
                                         placeholder: "Email",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         value: email,
                                         required: true
                                     })
@@ -62478,7 +62479,7 @@ var SignUp = function (_Component) {
                                         name: "password",
                                         id: "password",
                                         "data-typetoggle": "#show",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         value: password,
                                         placeholder: "Password",
                                         required: true
@@ -62493,7 +62494,7 @@ var SignUp = function (_Component) {
                                         name: "passwordConfirm",
                                         id: "passwordConfirm",
                                         "data-typetoggle": "#show",
-                                        onChange: _this3.handleChange,
+                                        onChange: _this3.onChange,
                                         onBlur: _this3.confirmPW,
                                         value: passwordConfirm,
                                         placeholder: "Confirm Password",
@@ -62604,7 +62605,7 @@ var Routes = function Routes(_ref) {
         refetch = _ref.refetch,
         props = _objectWithoutProperties(_ref, ["session", "refetch"]);
 
-    var currentUser = session.currentUser;
+    var currentUser = session ? session.currentUser : null;
     return _react2.default.createElement(
         _reactRouterDom.Switch,
         null,

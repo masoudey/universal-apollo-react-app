@@ -76,7 +76,7 @@ app.use(["*/:param", '*'], (req, res) => {
     const Html = (
         <ApolloProvider client={client} >
             <StaticRouter location={req.url} context={context} >
-                <App />
+                {/* <App /> */}
             </StaticRouter>
         </ApolloProvider>
     );
@@ -91,7 +91,7 @@ app.use(["*/:param", '*'], (req, res) => {
         res.send(`<!doctype html>\n${renderToStaticMarkup(html)}`);
         res.end();
     })
-})
+});
 
 const getCurrentUser = async req => {
     const token = req.cookies.token ? req.cookies.token : null;
