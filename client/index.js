@@ -44,6 +44,7 @@ const authLink = new ApolloLink((operation, forward) => {
         headers: {
             ...headers,
             'x-token': Cookies.get('token'),
+            'Cookie': Cookies.get('token'),
         },
     }));
 

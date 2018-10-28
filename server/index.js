@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import 'isomorphic-unfetch';
 import 'dotenv/config';
 import path from "path";
 import * as http from "http";
@@ -17,6 +18,7 @@ import { AuthenticationError } from 'apollo-server';
 import { ApolloProvider, getDataFromTree, renderToStringWithData } from 'react-apollo';
 import { ApolloClient } from 'apollo-client';
 import { SchemaLink } from "apollo-link-schema";
+import { createHttpLink } from "apollo-link-http";
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { makeExecutableSchema } from "graphql-tools";
 import mongoose from 'mongoose';
@@ -58,40 +60,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/', express.static('public'));
-app.use(["*/:param", '*'], (req, res) => {
-    const URL_Param = req.params.param ? req.params.param : null;
-
-    const schema = makeExecutableSchema({
-        typeDefs,
-        resolvers,
-    })
-    const client = new ApolloClient({
-        ssrMode: true,
-        link: new SchemaLink({schema}),
-        cache: new InMemoryCache(),
-    });
-
-    const context = {};
-
-    const Html = (
-        <ApolloProvider client={client} >
-            <StaticRouter location={req.url} context={context} >
-                {/* <App /> */}
-            </StaticRouter>
-        </ApolloProvider>
-    );
-
-    renderToStringWithData(Html).then((content) => {
-        const initialState = client.extract();
-        const helmet = Helmet.renderStatic();
-
-        const html = <HTML content={content} state={initialState} helmet={helmet} />;
-
-        res.status(200);
-        res.send(`<!doctype html>\n${renderToStaticMarkup(html)}`);
-        res.end();
-    })
-});
 
 const getCurrentUser = async req => {
     const token = req.cookies.token ? req.cookies.token : null;
@@ -167,6 +135,50 @@ if (config.ssl) {
 }
 
 apollo.installSubscriptionHandlers(server);
+
+app.use(["*/:param", '*'], (req, res) => {
+    const URL_Param = req.params.param ? req.params.param : null;
+
+    // const schema = makeExecutableSchema({
+    //     typeDefs,
+    //     resolvers,
+    // })
+    const client = new ApolloClient({
+        ssrMode: true,
+        link: createHttpLink({
+            uri: `${webConfig.siteURL}/graphql`,
+            credentials: 'same-origin',
+            headers: {
+                cookie: req.header('Cookie'),
+            },
+        }),
+        cache: new InMemoryCache(),
+    });
+
+    const context = {
+        URL_Param
+    };
+
+    const Html = (
+        <ApolloProvider client={client} >
+            <StaticRouter location={req.url} context={context} >
+                <App />
+            </StaticRouter>
+        </ApolloProvider>
+    );
+
+    getDataFromTree(Html).then(() => {
+        const content = renderToString(Html);
+        const initialState = client.extract();
+        const helmet = Helmet.renderStatic();
+
+        const html = <HTML content={content} state={initialState} helmet={helmet} />;
+
+        res.status(200);
+        res.send(`<!doctype html>\n${renderToStaticMarkup(html)}`);
+        res.end();
+    })
+});
 
 server.listen({ port: config.port }, () => {
     console.log(
