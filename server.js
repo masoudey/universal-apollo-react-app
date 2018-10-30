@@ -479,28 +479,17 @@ var apollo = new _apolloServerExpress.ApolloServer({
 });
 apollo.applyMiddleware({ app: app, path: '/graphql' });
 
-var server;
-
-if (config.ssl) {
-    server = https.createServer({
-        key: fs.readFileSync('./ssl/' + environment + '/server.key'),
-        cert: fs.readFileSync('./ssl/' + environment + '/server.crt')
-    }, app);
-} else {
-    server = http.createServer(app);
-}
-
-apollo.installSubscriptionHandlers(server);
-
 app.use(["*/:param", '*'], function (req, res) {
     var URL_Param = req.params.param ? req.params.param : null;
 
-    // const schema = makeExecutableSchema({
-    //     typeDefs,
-    //     resolvers,
-    // })
+    var schema = (0, _graphqlTools.makeExecutableSchema)({
+        typeDefs: _Schema2.default,
+        resolvers: _resolvers2.default
+
+    });
     var client = new _apolloClient.ApolloClient({
         ssrMode: true,
+        // link: new SchemaLink({schema}),
         link: (0, _apolloLinkHttp.createHttpLink)({
             uri: _webConfig2.default.siteURL + '/graphql',
             credentials: 'same-origin',
@@ -537,6 +526,19 @@ app.use(["*/:param", '*'], function (req, res) {
         res.end();
     });
 });
+
+var server;
+
+if (config.ssl) {
+    server = https.createServer({
+        key: fs.readFileSync('./ssl/' + environment + '/server.key'),
+        cert: fs.readFileSync('./ssl/' + environment + '/server.crt')
+    }, app);
+} else {
+    server = http.createServer(app);
+}
+
+apollo.installSubscriptionHandlers(server);
 
 server.listen({ port: config.port }, function () {
     console.log('🚀 Server ready at', 'http' + (config.ssl ? 's' : '') + '://' + config.hostname + ':' + config.port + apollo.graphqlPath);
