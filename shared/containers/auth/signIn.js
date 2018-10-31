@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component, Fragment, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
@@ -20,7 +20,31 @@ const initialState = {
     password: '',
 }
 
-class SignIn extends Component {
+function SignIn(props) {
+    const email = useFormInput('');
+    const password = useFormInput('');
+
+    return (
+        <Fragment>
+
+        </Fragment>
+    )
+}
+
+function useFormInput(initialValue) {
+    const [value, setValue] = useState(initialValue);
+
+    function handleChange(e) {
+        setValue(e.target.value);
+    };
+
+    return {
+        value,
+        onChange: handleChange,
+    };
+}
+
+class SignIn1 extends Component {
     constructor(props) {
         super(props);
         this.state = {
