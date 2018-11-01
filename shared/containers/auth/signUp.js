@@ -5,6 +5,8 @@ import gql from "graphql-tag";
 import * as Cookies from "es-cookie";
 import { Helmet } from "react-helmet";
 
+import useFormInput from "../../hooks/useFormInput";
+
 
 export const SIGNUP_USER = gql`
     mutation($username: String!, $email: String!, $password: String!, $firstName: String!, $lastName: String!, $profileImage: String) {
@@ -24,6 +26,15 @@ const initialState = {
     lastName: '',
     passwordMatch: '',
     error: ''
+}
+
+function SignUp() {
+
+    return (
+        <div>
+
+        </div>
+    )
 }
 
 class SignUp extends Component {

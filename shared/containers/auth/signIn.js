@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 import * as Cookies from "es-cookie";
 
 import { Helmet } from "react-helmet";
+import useFormInput from "../../hooks/useFormInput";
 
 export const SIGNIN_USER = gql`
     mutation($email: String!, $password: String!) {
@@ -31,18 +32,7 @@ function SignIn(props) {
     )
 }
 
-function useFormInput(initialValue) {
-    const [value, setValue] = useState(initialValue);
 
-    function handleChange(e) {
-        setValue(e.target.value);
-    };
-
-    return {
-        value,
-        onChange: handleChange,
-    };
-}
 
 class SignIn1 extends Component {
     constructor(props) {
