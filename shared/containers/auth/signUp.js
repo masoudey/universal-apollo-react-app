@@ -28,7 +28,14 @@ const initialState = {
     error: ''
 }
 
-function SignUp() {
+function SignUp(props) {
+    const username = useFormInput('');
+    const email = useFormInput('');
+    const password = useFormInput('');
+    const passwordConfirm = useFormInput('');
+    const firstName = useFormInput('');
+    const lastName = useFormInput('');
+    
 
     return (
         <div>
