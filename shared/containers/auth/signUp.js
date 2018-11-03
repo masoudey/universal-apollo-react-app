@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import { withRouter, Link } from "react-router-dom";
-import { Mutation } from "react-apollo";
+import { Mutation, Query } from "react-apollo";
 import gql from "graphql-tag";
 import * as Cookies from "es-cookie";
 import { Helmet } from "react-helmet";
@@ -35,11 +35,17 @@ function SignUp(props) {
     const passwordConfirm = useFormInput('');
     const firstName = useFormInput('');
     const lastName = useFormInput('');
+
+    const {data} = useContext();
     
+    const passwordMatch = password !== passwordConfirm;
+    const isInvalid = !firstName || !lastName || !email || !username || !password || password !== passwordConfirm
 
     return (
-        <div>
-
+        <div class="login-wrapper" >
+            <Helmet bodyAttributes={{ class: 'signUp'}}>
+                <title>Join now - Apollo React App</title>
+            </Helmet>
         </div>
     )
 }
