@@ -21,20 +21,22 @@ const initialState = {
     password: '',
 }
 
-function SignIn(props) {
+function SignInn(props) {
     const email = useFormInput('');
     const password = useFormInput('');
 
     return (
         <Fragment>
-
+            <Helmet bodyAttributes={{ class: 'signIn'}}>
+                <title>LogIn - Apollo React App</title>
+            </Helmet>
         </Fragment>
     )
 }
 
 
 
-class SignIn1 extends Component {
+class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {

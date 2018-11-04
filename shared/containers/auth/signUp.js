@@ -28,7 +28,7 @@ const initialState = {
     error: ''
 }
 
-function SignUp(props) {
+function SignUpp(props) {
     const username = useFormInput('');
     const email = useFormInput('');
     const password = useFormInput('');
@@ -36,7 +36,7 @@ function SignUp(props) {
     const firstName = useFormInput('');
     const lastName = useFormInput('');
 
-    const {data} = useContext();
+    const { data } = useContext();
     
     const passwordMatch = password !== passwordConfirm;
     const isInvalid = !firstName || !lastName || !email || !username || !password || password !== passwordConfirm
