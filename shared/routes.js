@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Lazy, Suspense } from "react";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
-import SignUp from "./containers/auth/signUp";
+const SignUp = Lazy(() => import("./containers/auth/signUp"));
 import SignIn from "./containers/auth/signIn";
 import Dashboard from "./containers/Dashboard";
 import Home from "./containers/Home";
