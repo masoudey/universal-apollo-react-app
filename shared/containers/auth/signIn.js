@@ -25,6 +25,9 @@ function SignInn(props) {
     const email = useFormInput('');
     const password = useFormInput('');
 
+    const isInvalid = !email || !password;
+
+
     return (
         <Fragment>
             <Helmet bodyAttributes={{ class: 'signIn'}}>
