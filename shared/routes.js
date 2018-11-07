@@ -1,5 +1,6 @@
 import React, { Lazy, Suspense } from "react";
 import { Spinner } from "./components/Spinner";
+
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 const SignUp = Lazy(() => import("./containers/auth/signUp"));
