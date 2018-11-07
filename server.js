@@ -1791,6 +1791,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _react = __webpack_require__(/*! react */ "react");
 
 var _react2 = _interopRequireDefault(_react);
@@ -1805,16 +1807,38 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Header = function (_Component) {
-    _inherits(Header, _Component);
+function Header(props) {
+    var _useState = (0, _react.useState)(false),
+        _useState2 = _slicedToArray(_useState, 2),
+        exposed = _useState2[0],
+        setExposed = _useState2[1];
 
-    function Header() {
-        _classCallCheck(this, Header);
+    return _react2.default.createElement(
+        "header",
+        null,
+        _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { to: "/signup" },
+            "SignUp"
+        ),
+        _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { to: "/signin" },
+            "SignIn"
+        )
+    );
+}
 
-        return _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).apply(this, arguments));
+var Header1 = function (_Component) {
+    _inherits(Header1, _Component);
+
+    function Header1() {
+        _classCallCheck(this, Header1);
+
+        return _possibleConstructorReturn(this, (Header1.__proto__ || Object.getPrototypeOf(Header1)).apply(this, arguments));
     }
 
-    _createClass(Header, [{
+    _createClass(Header1, [{
         key: "render",
         value: function render() {
             return _react2.default.createElement(
@@ -1834,12 +1858,93 @@ var Header = function (_Component) {
         }
     }]);
 
-    return Header;
+    return Header1;
 }(_react.Component);
 
 ;
 
 exports.default = (0, _reactRouterDom.withRouter)(Header);
+
+/***/ }),
+
+/***/ "./shared/components/Spinner.js":
+/*!**************************************!*\
+  !*** ./shared/components/Spinner.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Spinner = Spinner;
+
+var _react = __webpack_require__(/*! react */ "react");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+var SPINNER_SIZES = {
+  small: 30,
+  medium: 50,
+  large: 70
+};
+
+var STROKE_WIDTHS = {
+  small: 4,
+  medium: 5,
+  large: 6
+};
+
+var PATH_CLASS_NAMES = {
+  small: 'SmallSpinnerPath',
+  medium: 'MediumSpinnerPath',
+  large: 'LargeSpinnerPath'
+};
+
+// Heavily inspired by https://codepen.io/mrrocks/pen/EiplA
+function Spinner(_ref) {
+  var _ref$size = _ref.size,
+      size = _ref$size === undefined ? 'small' : _ref$size,
+      props = _objectWithoutProperties(_ref, ['size']);
+
+  var baseSize = SPINNER_SIZES[size];
+  var pathSize = baseSize / 2;
+  var strokeWidth = STROKE_WIDTHS[size];
+  var pathRadius = baseSize / 2 - strokeWidth + 'px';
+  var className = PATH_CLASS_NAMES[size];
+  var containerClassName = 'SpinnerContainer SpinnerContainer-' + size + ' ' + props.className;
+
+  return _react2.default.createElement(
+    'div',
+    { className: containerClassName },
+    _react2.default.createElement(
+      'svg',
+      {
+        className: className,
+        width: baseSize,
+        height: baseSize,
+        viewBox: '0 0 ' + baseSize + ' ' + baseSize
+      },
+      _react2.default.createElement('circle', {
+        className: 'SpinnerPath',
+        fill: 'none',
+        stroke: 'currentColor',
+        strokeWidth: strokeWidth,
+        strokeLinecap: 'round',
+        cx: pathSize,
+        cy: pathSize,
+        r: pathRadius
+      })
+    )
+  );
+}
 
 /***/ }),
 
@@ -2049,6 +2154,10 @@ var Cookies = _interopRequireWildcard(_esCookie);
 
 var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
 
+var _useFormInput = __webpack_require__(/*! ../../hooks/useFormInput */ "./shared/hooks/useFormInput.js");
+
+var _useFormInput2 = _interopRequireDefault(_useFormInput);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -2071,6 +2180,27 @@ var initialState = {
     email: '',
     password: ''
 };
+
+function SignInn(props) {
+    var email = (0, _useFormInput2.default)('');
+    var password = (0, _useFormInput2.default)('');
+
+    var isInvalid = !email || !password;
+
+    return _react2.default.createElement(
+        _react.Fragment,
+        null,
+        _react2.default.createElement(
+            _reactHelmet.Helmet,
+            { bodyAttributes: { class: 'signIn' } },
+            _react2.default.createElement(
+                "title",
+                null,
+                "LogIn - Apollo React App"
+            )
+        )
+    );
+}
 
 var SignIn = function (_Component) {
     _inherits(SignIn, _Component);
@@ -2311,6 +2441,10 @@ var Cookies = _interopRequireWildcard(_esCookie);
 
 var _reactHelmet = __webpack_require__(/*! react-helmet */ "react-helmet");
 
+var _useFormInput = __webpack_require__(/*! ../../hooks/useFormInput */ "./shared/hooks/useFormInput.js");
+
+var _useFormInput2 = _interopRequireDefault(_useFormInput);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -2339,6 +2473,35 @@ var initialState = {
     passwordMatch: '',
     error: ''
 };
+
+function SignUpp(props) {
+    var username = (0, _useFormInput2.default)('');
+    var email = (0, _useFormInput2.default)('');
+    var password = (0, _useFormInput2.default)('');
+    var passwordConfirm = (0, _useFormInput2.default)('');
+    var firstName = (0, _useFormInput2.default)('');
+    var lastName = (0, _useFormInput2.default)('');
+
+    var _useContext = (0, _react.useContext)(),
+        data = _useContext.data;
+
+    var passwordMatch = password !== passwordConfirm;
+    var isInvalid = !firstName || !lastName || !email || !username || !password || password !== passwordConfirm;
+
+    return _react2.default.createElement(
+        "div",
+        { className: "login-wrapper" },
+        _react2.default.createElement(
+            _reactHelmet.Helmet,
+            { bodyAttributes: { class: 'signUp' } },
+            _react2.default.createElement(
+                "title",
+                null,
+                "Join now - Apollo React App"
+            )
+        )
+    );
+}
 
 var SignUp = function (_Component) {
     _inherits(SignUp, _Component);
@@ -2599,6 +2762,44 @@ exports.default = (0, _reactRouterDom.withRouter)(SignUp);
 
 /***/ }),
 
+/***/ "./shared/hooks/useFormInput.js":
+/*!**************************************!*\
+  !*** ./shared/hooks/useFormInput.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+exports.default = useFormInput;
+
+var _react = __webpack_require__(/*! react */ "react");
+
+function useFormInput(initialValue) {
+    var _useState = (0, _react.useState)(initialValue),
+        _useState2 = _slicedToArray(_useState, 2),
+        value = _useState2[0],
+        setValue = _useState2[1];
+
+    function handleChange(e) {
+        setValue(e.target.value);
+    };
+
+    return {
+        value: value,
+        onChange: handleChange
+    };
+}
+
+/***/ }),
+
 /***/ "./shared/queries/userQueries.js":
 /*!***************************************!*\
   !*** ./shared/queries/userQueries.js ***!
@@ -2651,23 +2852,9 @@ var _react = __webpack_require__(/*! react */ "react");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Spinner = __webpack_require__(/*! ./components/Spinner */ "./shared/components/Spinner.js");
+
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "react-router-dom");
-
-var _signUp = __webpack_require__(/*! ./containers/auth/signUp */ "./shared/containers/auth/signUp.js");
-
-var _signUp2 = _interopRequireDefault(_signUp);
-
-var _signIn = __webpack_require__(/*! ./containers/auth/signIn */ "./shared/containers/auth/signIn.js");
-
-var _signIn2 = _interopRequireDefault(_signIn);
-
-var _Dashboard = __webpack_require__(/*! ./containers/Dashboard */ "./shared/containers/Dashboard.js");
-
-var _Dashboard2 = _interopRequireDefault(_Dashboard);
-
-var _Home = __webpack_require__(/*! ./containers/Home */ "./shared/containers/Home.js");
-
-var _Home2 = _interopRequireDefault(_Home);
 
 var _withAuth = __webpack_require__(/*! ./components/session/withAuth */ "./shared/components/session/withAuth.js");
 
@@ -2677,6 +2864,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var SignUp = (0, _react.Lazy)(function () {
+    return Promise.resolve().then(function () {
+        return _interopRequireWildcard(__webpack_require__(/*! ./containers/auth/signUp */ "./shared/containers/auth/signUp.js"));
+    });
+});
+var SignIn = (0, _react.Lazy)(function () {
+    return Promise.resolve().then(function () {
+        return _interopRequireWildcard(__webpack_require__(/*! ./containers/auth/signIn */ "./shared/containers/auth/signIn.js"));
+    });
+});
+var Dashboard = (0, _react.Lazy)(function () {
+    return Promise.resolve().then(function () {
+        return _interopRequireWildcard(__webpack_require__(/*! ./containers/Dashboard */ "./shared/containers/Dashboard.js"));
+    });
+});
+var Home = (0, _react.Lazy)(function () {
+    return Promise.resolve().then(function () {
+        return _interopRequireWildcard(__webpack_require__(/*! ./containers/Home */ "./shared/containers/Home.js"));
+    });
+});
+
+
 var Routes = function Routes(_ref) {
     var session = _ref.session,
         refetch = _ref.refetch,
@@ -2684,36 +2895,40 @@ var Routes = function Routes(_ref) {
 
     var currentUser = session ? session.currentUser : null;
     return _react2.default.createElement(
-        _reactRouterDom.Switch,
-        null,
-        _react2.default.createElement(_reactRouterDom.Route, {
-            exact: true,
-            path: "/",
-            component: function component() {
-                return _react2.default.createElement(_Home2.default, null);
-            }
-        }),
-        _react2.default.createElement(_reactRouterDom.Route, {
-            exact: true,
-            path: "/signup",
-            render: function render(props) {
-                return currentUser ? _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" }) : _react2.default.createElement(_signUp2.default, _extends({}, props, { refetch: refetch }));
-            }
-        }),
-        _react2.default.createElement(_reactRouterDom.Route, {
-            exact: true,
-            path: "/signin",
-            render: function render(props) {
-                return currentUser ? _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" }) : _react2.default.createElement(_signIn2.default, _extends({}, props, { refetch: refetch }));
-            }
-        }),
-        _react2.default.createElement(_reactRouterDom.Route, {
-            exact: true,
-            path: "/dashboard",
-            render: (0, _withAuth2.default)(function (session) {
-                return session && session.currentUser;
-            })(_Dashboard2.default)
-        })
+        _react.Suspense,
+        { fallback: _react2.default.createElement(_Spinner.Spinner, { size: "large" }) },
+        _react2.default.createElement(
+            _reactRouterDom.Switch,
+            null,
+            _react2.default.createElement(_reactRouterDom.Route, {
+                exact: true,
+                path: "/",
+                component: function component() {
+                    return _react2.default.createElement(Home, null);
+                }
+            }),
+            _react2.default.createElement(_reactRouterDom.Route, {
+                exact: true,
+                path: "/signup",
+                render: function render(props) {
+                    return currentUser ? _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" }) : _react2.default.createElement(SignUp, _extends({}, props, { refetch: refetch }));
+                }
+            }),
+            _react2.default.createElement(_reactRouterDom.Route, {
+                exact: true,
+                path: "/signin",
+                render: function render(props) {
+                    return currentUser ? _react2.default.createElement(_reactRouterDom.Redirect, { to: "/" }) : _react2.default.createElement(SignIn, _extends({}, props, { refetch: refetch }));
+                }
+            }),
+            _react2.default.createElement(_reactRouterDom.Route, {
+                exact: true,
+                path: "/dashboard",
+                render: (0, _withAuth2.default)(function (session) {
+                    return session && session.currentUser;
+                })(Dashboard)
+            })
+        )
     );
 };
 
