@@ -21,7 +21,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _templateObject = _taggedTemplateLiteral(["\n    mutation($username: String!, $email: String!, $password: String!, $firstName: String!, $lastName: String!, $profileImage: String) {\n        signUp(username: $username, email: $email, password: $password, firstName: $firstName, lastName: $lastName, profileImage:$profileImage) {\n            token\n            user\n        }\n    }\n"], ["\n    mutation($username: String!, $email: String!, $password: String!, $firstName: String!, $lastName: String!, $profileImage: String) {\n        signUp(username: $username, email: $email, password: $password, firstName: $firstName, lastName: $lastName, profileImage:$profileImage) {\n            token\n            user\n        }\n    }\n"]);
 
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _react = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -378,7 +378,7 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 exports.default = useFormInput;
 
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var _react = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module 'react'"); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 
 function useFormInput(initialValue) {
     var _useState = (0, _react.useState)(initialValue),

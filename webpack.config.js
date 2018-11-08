@@ -91,21 +91,21 @@ const serverConfig = {
         filename: 'server.js',
         publicPath: '/'
     },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-            name: 'manifest',
-            minChunks: Infinity
-        },
-    },
+    // optimization: {
+    //     splitChunks: {
+    //         chunks: 'all',
+    //         name: 'manifest',
+    //         minChunks: Infinity
+    //     },
+    // },
     plugins: [
      
     ],
     module: {
         rules: [
             {
-                test: /\.js?$/,
-                // include: path.resolve(__dirname, 'server'),
+                test: /\.(js|jsx)?$/,
+                // include: path.resolve(__dirname, 'src'),
                 exclude: path.resolve(__dirname, 'node_modules'),
                 loader: 'babel-loader',
 
@@ -148,7 +148,7 @@ const serverConfig = {
         ]
     },
     devtool: 'source-map',
-    externals: [webpackNodeExternals()],
+    // externals: [webpackNodeExternals()],
 
 }
 
