@@ -51,10 +51,10 @@
     "multer": "^1.3.1",
     "path": "^0.12.7",
     "prop-types": "^15.6.2",
-    "react": "./vendor/react/",
+    "react": "^16.7.0-alpha.0",
     "react-apollo": "^2.1.11",
     "react-cache": "./vendor/react-cache/",
-    "react-dom": "./vendor/react-dom/",
+    "react-dom": "^16.7.0-alpha.0",
     "react-helmet": "^5.2.0",
     "react-router-dom": "^4.3.1",
     "scheduler": "./vendor/scheduler/"

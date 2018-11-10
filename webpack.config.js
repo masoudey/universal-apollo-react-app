@@ -148,7 +148,7 @@ const serverConfig = {
         ]
     },
     devtool: 'source-map',
-    // externals: [webpackNodeExternals()],
+    externals: [webpackNodeExternals()],
 
 }
 
