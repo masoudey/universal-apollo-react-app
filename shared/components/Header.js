@@ -1,7 +1,8 @@
 import React, { Component, useState } from "react";
 import { withRouter, NavLink, Link } from "react-router-dom";
 
-function Header(props) {
+
+function Header1(props) {
     const [exposed, setExposed] = useState(false);
 
     return (
@@ -13,16 +14,14 @@ function Header(props) {
     )
 }
 
-class Header1 extends Component {
+const Header = ({session}) => {
 
-    render() {
         return (
             <header>
                 <NavLink to='/signin'>SignIn</NavLink>
                 <NavLink to='/signup'>SignUp</NavLink>
             </header>
         )
-    }
 };
 
 export default withRouter(Header);

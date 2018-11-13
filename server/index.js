@@ -28,7 +28,7 @@ import webConfig from "../webConfig";
 
 
 import HTML from "./helpers/renderer";
-import App from "../shared/app";
+// import App from "../shared/app";
 
 import typeDefs from "./Schema";
 import resolvers from "./resolvers";
@@ -148,7 +148,7 @@ app.use(["*/:param", '*'], (req, res) => {
     const Html = (
         <ApolloProvider client={client} >
             <StaticRouter location={req.url} context={context} >
-                <App />
+                {/* <App /> */}
             </StaticRouter>
         </ApolloProvider>
     );
