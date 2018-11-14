@@ -1,5 +1,6 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { withRouter, NavLink, Link } from "react-router-dom";
+import Navbar from "../StyledComponents/Nav/Navbar";
 
 
 function Header1(props) {

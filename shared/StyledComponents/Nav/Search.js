@@ -2,11 +2,11 @@ import React from 'react';
 import styled, { css, createGlobalStyle } from 'styled-components';
 import { Search as SearchIcon } from 'styled-icons/material';
 import PropTypes from 'prop-types';
-import { grey, lightVioletRed, violetRed, darkGrey } from '../../utils/colors';
-import rem from '../../utils/rem';
-import { navbarHeight } from '../../utils/sizes';
-import { resetInput } from '../../utils/form';
-import { mobile } from '../../utils/media';
+import { grey, lightVioletRed, violetRed, darkGrey } from '../utils/colors';
+import rem from '../utils/rem';
+import { navbarHeight } from '../utils/sizes';
+import { resetInput } from '../utils/form';
+import { mobile } from '../utils/media';
 
 const StyledSearchIcon = styled(SearchIcon)``;
 
@@ -154,13 +154,13 @@ const GlobalStyles = createGlobalStyle`
   }
 `;
 
-const Search = ({ isDocs, className }) => (
-  <Wrapper className={className}>
+const Search = ({ isPosts, className }) => (
+  <Wrapper class={className}>
     <GlobalStyles />
     <Button>
       <StyledSearchIcon />
     </Button>
-    <Input id={INPUT_ID} placeholder={isDocs ? `Search ...` : `Search docs ...`} type="search" />
+    <Input id={INPUT_ID} placeholder={isPosts ? `Search ...` : `Search docs ...`} type="search" />
   </Wrapper>
 );
 

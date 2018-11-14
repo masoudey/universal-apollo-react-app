@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import rem from '../../utils/rem'
+import rem from '../utils/rem'
 
 const Logo = styled.div`
   display: inline-block;

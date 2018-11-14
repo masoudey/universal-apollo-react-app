@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import UnstyledLink from 'next/link';
+import { Link } from 'react-router-dom';
 
 import rem from '../utils/rem';
 import { red, violetRed, lightGrey } from '../utils/colors';
 
-export const StyledLink = styled.a`
+export const StyledLink = styled(Link)`
   display: inline-block;
   color: inherit;
   cursor: pointer;
@@ -20,7 +20,7 @@ export const StyledLink = styled.a`
   }
 `;
 
-export const InlineLink = styled.a.attrs({
+export const InlineLink = styled(Link).attrs({
   target: '_blank',
   rel: 'noopener',
 })`
@@ -33,7 +33,7 @@ export const InlineLink = styled.a.attrs({
   }
 `;
 
-const Link = ({ children, className, inline, unstyled, white, ...rest }) => {
+const _Link = ({ children, className, inline, unstyled, white, ...rest }) => {
   let Child = StyledLink;
   if (inline) {
     Child = InlineLink;
@@ -47,12 +47,10 @@ const Link = ({ children, className, inline, unstyled, white, ...rest }) => {
   }
 
   return (
-    <UnstyledLink {...rest}>
-      <Child href={rest.href} className={className} aria-label={rest['aria-label']} {...dataAttrs}>
+      <Child to={rest.to} className={className} aria-label={rest['aria-label']} {...dataAttrs}>
         {children}
       </Child>
-    </UnstyledLink>
   );
 };
 
-export default Link;
+export default _Link;

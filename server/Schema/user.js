@@ -39,7 +39,7 @@ export default gql`
         lastName: String!
         bio: String
         userImage: String
-        rol: String
+        role: String
         createdAt: String!
         posts: [Post!]
     }

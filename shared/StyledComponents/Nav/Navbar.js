@@ -1,4 +1,4 @@
-import React, { PureComponent, createRef } from 'react'
+import React, { PureComponent, createRef, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 import { Close } from 'styled-icons/material'
 import rem from '../utils/rem'
@@ -11,7 +11,7 @@ import NavLinks from './NavLinks'
 import Social from './Social'
 import Logo from './Logo'
 import MobileNavbar from './MobileNavbar'
-import SearchWithAlgolia from './SearchWithAlgolia'
+import Search from './Search'
 
 const Wrapper = styled.nav`
   position: fixed;
@@ -134,7 +134,7 @@ class ModalContainer extends PureComponent {
   }
   render() {
     return (
-      <>
+      <Fragment>
         <AlgoliaModalHeader isOpen={this.props.isOpen}>
           <button onClick={this.onCloseButtonClick}>
             <StyledModalCloseIcon />
@@ -148,7 +148,7 @@ class ModalContainer extends PureComponent {
             <div>{this.props.children}</div>
           </AlgoliaModal>
         </AlgoliaModalOverlay>
-      </>
+      </Fragment>
     )
   }
 }
@@ -193,7 +193,7 @@ class Navbar extends PureComponent {
               isOpen={this.state.isOpen}
               requestModalClose={this.closeModal}
             >
-              <SearchWithAlgolia requestModalClose={this.closeModal} />
+              <Search />
             </ModalContainer>
             <StyledSocial />
           </EndWrapper>

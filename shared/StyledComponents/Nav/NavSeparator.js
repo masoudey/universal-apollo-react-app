@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-import rem from '../../utils/rem'
+import rem from '../utils/rem'
 
 const NavSeparator = styled.span`
   flex: 0 0 auto;
