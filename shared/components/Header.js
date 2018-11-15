@@ -1,15 +1,22 @@
 import React, { useState } from "react";
 import { withRouter, NavLink, Link } from "react-router-dom";
 import Navbar from "../StyledComponents/Nav/Navbar";
+import useIsScrolled from "../hooks/useIsScrolled";
 
 
 function Header1(props) {
-    const [exposed, setExposed] = useState(false);
+    const [isMobileNavFolded, setIsMobileNavFolded] = useState(false);
+    const isScrolled = useIsScrolled();
+    const toggleMobileNav = () => setIsMobileNavFolded(!isMobileNavFolded)
 
     return (
         <header>
-            <NavLink to='/signup' >SignUp</NavLink>
-            <NavLink to='/signin' >SignIn</NavLink>
+            <Navbar 
+                showSideNav={false}
+                transparent={!isScrolled}
+                isMobileNavFolded={isMobileNavFolded}
+                onMobileNavToggle={toggleMobileNav}
+            />
         </header>
 
     )
