@@ -16,6 +16,7 @@ function Header1(props) {
                 transparent={!isScrolled}
                 isMobileNavFolded={isMobileNavFolded}
                 onMobileNavToggle={toggleMobileNav}
+                session={props.session}
             />
         </header>
 

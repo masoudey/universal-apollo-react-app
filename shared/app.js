@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Fragment } from "react";
 import { withRouter } from "react-router-dom";
 import withSession from "./components/session/withSession";
 
@@ -6,13 +6,9 @@ import Routes from "./routes";
 import Header from "./components/Header";
 
 
-class App extends Component {
-    constructor(props) {
-        super(props);
-    }
+function App(props) {
 
-    render() {
-        const session = this.props.session;
+        const session = props.session;
         return (
             <Fragment>
                 <Header session={session} />
@@ -21,7 +17,6 @@ class App extends Component {
                 </main>
             </Fragment>
         )
-    }
 }
 
 export default withRouter(withSession(App));
