@@ -1,6 +1,6 @@
 import React from "react";
 import { Router } from "react-router-dom";
-import { hydrate, unstable_createRoot } from "react-dom";
+import { hydrate  } from "react-dom";
 import { ApolloClient } from "apollo-client";
 import { getMainDefinition } from "apollo-utilities";
 import { ApolloProvider } from "react-apollo";

@@ -1,4 +1,4 @@
-import React, { PureComponent, createRef, Fragment } from 'react'
+import React, { useState, createRef, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 import { Close } from 'styled-icons/material'
 import rem from '../utils/rem'
@@ -9,8 +9,7 @@ import { mobile } from '../utils/media'
 import Link from './Link'
 import NavLinks from './NavLinks'
 import Social from './Social'
-import Logo from './Logo'
-import MobileNavbar from './MobileNavbar'
+import Logo from './Logo';
 import Search from './Search'
 
 const Wrapper = styled.nav`
@@ -121,36 +120,35 @@ const AlgoliaModalOverlay = styled.div`
   `)};
 `
 
-class ModalContainer extends PureComponent {
+function ModalContainer(props)  {
   modalElement = createRef()
   onModalOverlayClick = e => {
-    if (!this.modalElement.current.contains(e.target)) {
-      this.props.requestModalClose()
+    if (!modalElement.current.contains(e.target)) {
+      props.requestModalClose()
     }
   }
   onCloseButtonClick = e => {
     e.stopPropagation()
-    this.props.requestModalClose()
+    props.requestModalClose()
   }
-  render() {
+
     return (
       <Fragment>
-        <AlgoliaModalHeader isOpen={this.props.isOpen}>
-          <button onClick={this.onCloseButtonClick}>
+        <AlgoliaModalHeader isOpen={props.isOpen}>
+          <button onClick={onCloseButtonClick}>
             <StyledModalCloseIcon />
           </button>
         </AlgoliaModalHeader>
         <AlgoliaModalOverlay
-          onClick={this.onModalOverlayClick}
-          isOpen={this.props.isOpen}
+          onClick={onModalOverlayClick}
+          isOpen={props.isOpen}
         >
-          <AlgoliaModal ref={this.modalElement}>
-            <div>{this.props.children}</div>
+          <AlgoliaModal ref={modalElement}>
+            <div>{props.children}</div>
           </AlgoliaModal>
         </AlgoliaModalOverlay>
       </Fragment>
     )
-  }
 }
 
 const LogoLink = styled(Link).attrs({
@@ -162,22 +160,22 @@ const LogoLink = styled(Link).attrs({
   margin-right: ${rem(35)};
 `
 
-class Navbar extends PureComponent {
-  state = {
-    isOpen: false,
+function Navbar(props) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  function openModal() {
+    setIsOpen(true);
   }
-  openModal = () => this.setState(() => ({ isOpen: true }))
-  closeModal = () =>
-    this.setState(({ isOpen }) => (isOpen ? { isOpen: false } : null))
-  render() {
-    const {
-      onSideToggle,
-      onMobileNavToggle,
-      isSideFolded,
-      isMobileNavFolded,
-      showSideNav,
-      transparent,
-    } = this.props
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  const {
+    onNavToggle,
+    isNavFolded,
+    session,
+    transparent,
+  } = props
 
     return (
       <Wrapper transparent={transparent}>
@@ -190,25 +188,16 @@ class Navbar extends PureComponent {
           </StartWrapper>
           <EndWrapper>
             <ModalContainer
-              isOpen={this.state.isOpen}
-              requestModalClose={this.closeModal}
+              isOpen={isOpen}
+              requestModalClose={closeModal}
             >
               <Search />
             </ModalContainer>
             <StyledSocial />
           </EndWrapper>
         </NormalNavbar>
-        <MobileNavbar
-          isSideFolded={isSideFolded}
-          onSearchButtonClick={this.openModal}
-          isMobileNavFolded={isMobileNavFolded}
-          onSideToggle={onSideToggle}
-          onMobileNavToggle={onMobileNavToggle}
-          showSideNav={showSideNav}
-        />
       </Wrapper>
     )
   }
-}
 
 export default Navbar
