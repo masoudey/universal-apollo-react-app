@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Spinner.css';
 
 const SPINNER_SIZES = {
   small: 30,

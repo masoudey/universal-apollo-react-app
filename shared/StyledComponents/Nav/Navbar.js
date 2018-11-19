@@ -1,8 +1,8 @@
-import React, { useState, createRef, Fragment } from 'react'
+import React, { useState, useRef, createRef, Fragment } from 'react'
 import styled, { css } from 'styled-components'
 import { Close } from 'styled-icons/material'
 import rem from '../utils/rem'
-import { violetRed, paleGrey } from '../utils/colors'
+import { violetBlue, paleGrey } from '../utils/colors'
 import { navbarHeight } from '../utils/sizes'
 import { headerFont } from '../utils/fonts'
 import { mobile } from '../utils/media'
@@ -24,7 +24,7 @@ const Wrapper = styled.nav`
   font-family: ${headerFont};
   font-size: ${rem(15)};
   font-weight: 500;
-  background: ${props => (props.transparent ? 'transparent' : violetRed)};
+  background: ${props => (props.transparent ? 'transparent' : violetBlue)};
   transition: background 300ms ease-out;
   color: white;
   padding: 0;
@@ -121,13 +121,13 @@ const AlgoliaModalOverlay = styled.div`
 `
 
 function ModalContainer(props)  {
-  modalElement = createRef()
-  onModalOverlayClick = e => {
+  const modalElement = createRef();
+  const onModalOverlayClick = e => {
     if (!modalElement.current.contains(e.target)) {
       props.requestModalClose()
     }
   }
-  onCloseButtonClick = e => {
+  const onCloseButtonClick = e => {
     e.stopPropagation()
     props.requestModalClose()
   }

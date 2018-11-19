@@ -4,7 +4,7 @@ import withSession from "./components/session/withSession";
 
 import Routes from "./routes";
 import Header from "./components/Header";
-
+import './app.css';
 
 function App(props) {
 

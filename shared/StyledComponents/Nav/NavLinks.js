@@ -13,16 +13,13 @@ const Wrapper = styled.nav`
   margin-right: ${rem(30)};
 `;
 
-const StyledNavLink = styled(NavLink).attrs({
-  unstyled: true,
-  prefetch: true,
-})`
+const StyledNavLink = styled(NavLink)`
   flex: 0 0 auto;
   display: inline-block;
   line-height: ${rem(navbarHeight)};
   transition: opacity 0.2s, transform 0.2s;
   cursor: pointer;
-
+  text-decoration: none;
   letter-spacing: ${rem(0.4)};
   color: currentColor;
 
@@ -39,6 +36,8 @@ const StyledNavLink = styled(NavLink).attrs({
 
 const NavLinks = () => (
   <Wrapper>
+     <StyledNavLink to='/'>Home</StyledNavLink>
+    <NavSeparator />
     <StyledNavLink to='/signup'>SignUp</StyledNavLink>
     <NavSeparator />
     <StyledNavLink to='/signin'>SignIn</StyledNavLink>

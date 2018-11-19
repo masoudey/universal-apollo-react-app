@@ -12,7 +12,7 @@ function Header(props) {
     return (
         <header>
             <Navbar 
-                transparent={!isScrolled}
+                transparent={isScrolled}
                 isNavFolded={isNavFolded}
                 onNavToggle={toggleNav}
                 session={props.session}

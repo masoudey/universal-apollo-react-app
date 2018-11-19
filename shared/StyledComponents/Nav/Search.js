@@ -160,7 +160,7 @@ const Search = ({ isPosts, className }) => (
     <Button>
       <StyledSearchIcon />
     </Button>
-    <Input id={INPUT_ID} placeholder={isPosts ? `Search ...` : `Search docs ...`} type="search" />
+    <Input id={INPUT_ID} placeholder={isPosts ? `Search ...` : `Search Posts ...`} type="search" />
   </Wrapper>
 );
 
