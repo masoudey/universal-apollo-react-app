@@ -1,6 +1,6 @@
 import React from "react";
 import { Router } from "react-router-dom";
-import { hydrate  } from "react-dom";
+import ReactDOM, { hydrate,  } from "react-dom";
 import { ApolloClient } from "apollo-client";
 import { getMainDefinition } from "apollo-utilities";
 import { ApolloProvider } from "react-apollo";
@@ -89,14 +89,19 @@ const client = new ApolloClient({
 
 const history = createBrowserHistory();
 const root = document.getElementById('root');
-
-hydrate(
-    <ApolloProvider client={client} >
-        <Router history={history}>
-            <App />
-        </Router>
-    </ApolloProvider>,
-    root
-);
+ReactDOM.createRoot(root).render(
+<ApolloProvider client={client} >
+    <Router history={history}>
+        <App />
+    </Router>
+</ApolloProvider>);
+// hydrate(
+//     <ApolloProvider client={client} >
+//         <Router history={history}>
+//             <App />
+//         </Router>
+//     </ApolloProvider>,
+//     root
+// );
 
 registerServiceWorker();

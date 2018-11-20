@@ -17,6 +17,7 @@ function Header(props) {
                 onNavToggle={toggleNav}
                 session={props.session}
             />
+            {/* <NavLink to='/signin' >SignIn</NavLink> */}
         </header>
 
     )

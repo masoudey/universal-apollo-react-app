@@ -193,7 +193,7 @@ function Navbar(props) {
             >
               <Search />
             </ModalContainer>
-            <StyledSocial />
+            {/* <StyledSocial /> */}
           </EndWrapper>
         </NormalNavbar>
       </Wrapper>
