@@ -184,7 +184,7 @@ function Navbar(props) {
             <LogoLink>
               <Logo />
             </LogoLink>
-            <NavLinks />
+            <NavLinks session={session} />
           </StartWrapper>
           <EndWrapper>
             <ModalContainer

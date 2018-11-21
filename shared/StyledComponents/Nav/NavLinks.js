@@ -34,7 +34,7 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
 
-const NavLinks = () => (
+const NavLinks = ({session}) => (
   <Wrapper>
      <StyledNavLink to='/'>Home</StyledNavLink>
     <NavSeparator />
@@ -42,7 +42,7 @@ const NavLinks = () => (
     <NavSeparator />
     <StyledNavLink to='/signin'>SignIn</StyledNavLink>
     <NavSeparator />
-    <StyledNavLink to='/dashboard'>Dashboard</StyledNavLink>
+    {session && <StyledNavLink to='/dashboard'>Dashboard</StyledNavLink>}
   </Wrapper>
 );
 
