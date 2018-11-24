@@ -20,8 +20,8 @@ const Home = ({ session }) => {
     return (
         <Fragment>
             <h1>Home</h1>
-            <Suspense fallback={<img src='/aaa.jpeg' alt='me'/>}>
-                <Img src='/a.jpeg' alt='masoud' />
+            <Suspense fallback={<img src='/aaa.jpg' alt='me'/>}>
+                <Img src='/a.jpg' alt='masoud' />
             </Suspense>
         </Fragment>
     )

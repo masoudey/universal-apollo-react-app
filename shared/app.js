@@ -7,13 +7,13 @@ import Header from "./components/Header";
 import './app.css';
 
 function App(props) {
-
-        const session = props.session;
+        console.log(props.session.currentUser);
+        const currentUser = props.session.currentUser;
         return (
             <Fragment>
-                <Header session={session} />
+                <Header currentUser={currentUser} />
                 <main>
-                    <Routes session={session}/>
+                    <Routes currentUser={currentUser}/>
                 </main>
             </Fragment>
         )

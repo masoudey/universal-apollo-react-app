@@ -57,8 +57,8 @@ var Home = function Home(_ref2) {
         ),
         _react2.default.createElement(
             _react.Suspense,
-            { fallback: _react2.default.createElement("img", { src: "/aaa.jpeg", alt: "me" }) },
-            _react2.default.createElement(Img, { src: "/a.jpeg", alt: "masoud" })
+            { fallback: _react2.default.createElement("img", { src: "/aaa.jpg", alt: "me" }) },
+            _react2.default.createElement(Img, { src: "/a.jpg", alt: "masoud" })
         )
     );
 };

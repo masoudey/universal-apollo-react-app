@@ -4,7 +4,7 @@ import Navbar from "../StyledComponents/Nav/Navbar";
 import useIsScrolled from "../hooks/useIsScrolled";
 
 
-function Header(props) {
+function Header({currentUser}) {
     const [isNavFolded, setIsNavFolded] = useState(false);
     const isScrolled = useIsScrolled();
     const toggleNav = () => setIsNavFolded(!isNavFolded)
@@ -15,7 +15,7 @@ function Header(props) {
                 transparent={isScrolled}
                 isNavFolded={isNavFolded}
                 onNavToggle={toggleNav}
-                session={props.session}
+                currentUser={currentUser}
             />
             {/* <NavLink to='/signin' >SignIn</NavLink> */}
         </header>

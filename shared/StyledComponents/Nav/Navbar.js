@@ -173,7 +173,7 @@ function Navbar(props) {
   const {
     onNavToggle,
     isNavFolded,
-    session,
+    currentUser,
     transparent,
   } = props
 
@@ -184,7 +184,7 @@ function Navbar(props) {
             <LogoLink>
               <Logo />
             </LogoLink>
-            <NavLinks session={session} />
+            <NavLinks currentUser={currentUser} />
           </StartWrapper>
           <EndWrapper>
             <ModalContainer
