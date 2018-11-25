@@ -14,13 +14,13 @@ const createToken = async (user, secret, expiresIn) => {
     return await jwt.sign({id, email, username, role }, secret, {expiresIn,});
 };
 
-const generatePasswordHash = async function() {
+const generatePasswordHash = async function(password) {
     const saltRound = 10;
-    return await bcrypt.hashSync(this.password, saltRound);    
+    return await bcrypt.hashSync(password, saltRound);    
 }
 
-const validatePassword = async function(password) {
-    return await bcrypt.compare(password, this.password);
+const validatePassword = async function(password, userPassword) {
+    return await bcrypt.compare(password, userPassword);
 }
 
 export default {
@@ -35,8 +35,8 @@ export default {
             if (!currentUser) {
                 return null;
             }
-
-            return await models.User.findById(currentUser.id)
+            const email = currentUser.email;
+            return await models.User.findOne({ email })
         },
     },
     Mutation: {
@@ -71,12 +71,12 @@ export default {
             { models, secret },
         ) => {
             const user = await models.User.findOne({ email });
-
+            
             if (!user) {
                 throw new UserInputError('User doesnt exist');
             }
 
-            const isValidPass = await validatePassword(password)
+            const isValidPass = await validatePassword(password, user.password)
             if (!isValidPass) {
                 throw new AuthenticationError('Invalid password');
             }

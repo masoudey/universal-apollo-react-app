@@ -12,7 +12,7 @@ function App(props) {
         return (
             <Fragment>
                 <Header currentUser={currentUser} />
-                <main>
+                <main style={{marginTop:'60px'}}>
                     <Routes currentUser={currentUser}/>
                 </main>
             </Fragment>

@@ -19,7 +19,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _templateObject = _taggedTemplateLiteral(["\n    mutation($email: String!, $password: String!) {\n        signIn(email: $email, password: $password) {\n            token\n            user\n        }\n    }\n"], ["\n    mutation($email: String!, $password: String!) {\n        signIn(email: $email, password: $password) {\n            token\n            user\n        }\n    }\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n    mutation($email: String!, $password: String!) {\n        signIn(email: $email, password: $password) {\n            token\n            user{\n                username\n                email\n                firstName\n                lastName\n                password\n            }\n        }\n    }\n"], ["\n    mutation($email: String!, $password: String!) {\n        signIn(email: $email, password: $password) {\n            token\n            user{\n                username\n                email\n                firstName\n                lastName\n                password\n            }\n        }\n    }\n"]);
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
@@ -106,7 +106,7 @@ var SignIn = function (_Component) {
         };
 
         _this.onSubmit = function (e, signIn) {
-            e.preventDefault();
+
             signIn().then(function () {
                 var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref2) {
                     var data = _ref2.data;
@@ -146,6 +146,7 @@ var SignIn = function (_Component) {
                     return x.message;
                 }));
             });
+            e.preventDefault();
         };
 
         _this.validationForm = function () {
@@ -206,6 +207,8 @@ var SignIn = function (_Component) {
                                 loading = _ref3.loading,
                                 error = _ref3.error;
 
+                            console.log("data", data);
+                            console.log("signin", signIn);
                             return _react2.default.createElement(
                                 "form",
                                 { name: "form", onSubmit: function onSubmit(e) {

@@ -11,7 +11,13 @@ export const SIGNIN_USER = gql`
     mutation($email: String!, $password: String!) {
         signIn(email: $email, password: $password) {
             token
-            user
+            user{
+                username
+                email
+                firstName
+                lastName
+                password
+            }
         }
     }
 `;
@@ -61,7 +67,7 @@ class SignIn extends Component {
     }
 
     onSubmit = (e, signIn) => {
-        e.preventDefault();
+        
         signIn().then(async ({ data }) => {
             this.setState({ ...initialState });
 
@@ -76,6 +82,7 @@ class SignIn extends Component {
             });
             console.error("ERR -", error.graphQLErrors.map(x => x.message));
         });
+        e.preventDefault();
     }
 
     validationForm = () => {
@@ -96,6 +103,8 @@ class SignIn extends Component {
                         variables={{ email, password}}
                     >
                     {(signIn, { data, loading, error}) => {
+                        console.log("data", data);
+                        console.log("signin", signIn);
                         return (
                             <form name="form" onSubmit={e => this.onSubmit(e, signIn)}>
                                 <fieldset>

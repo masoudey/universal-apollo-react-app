@@ -374,31 +374,34 @@ var getCurrentUser = function () {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
+                        console.log("Cookie", req.cookies);
                         token = req.cookies.token ? req.cookies.token : null;
 
+                        console.log(token);
+
                         if (!token) {
-                            _context.next = 11;
+                            _context.next = 13;
                             break;
                         }
 
-                        _context.prev = 2;
-                        _context.next = 5;
+                        _context.prev = 4;
+                        _context.next = 7;
                         return _jsonwebtoken2.default.verify(token, process.env.JWT_SECRET);
 
-                    case 5:
+                    case 7:
                         return _context.abrupt('return', _context.sent);
 
-                    case 8:
-                        _context.prev = 8;
-                        _context.t0 = _context['catch'](2);
+                    case 10:
+                        _context.prev = 10;
+                        _context.t0 = _context['catch'](4);
                         throw new _apolloServer.AuthenticationError('Session Expired...');
 
-                    case 11:
+                    case 13:
                     case 'end':
                         return _context.stop();
                 }
             }
-        }, _callee, undefined, [[2, 8]]);
+        }, _callee, undefined, [[4, 10]]);
     }));
 
     return function getCurrentUser(_x) {
@@ -435,33 +438,25 @@ var apollo = new _apolloServerExpress.ApolloServer({
 
                         case 2:
                             if (!req) {
-                                _context2.next = 5;
+                                _context2.next = 8;
                                 break;
                             }
 
-                            // const currentUser = await getCurrentUser(req);
-                            currentUser = {
-                                "_id": {
-                                    "$oid": "5ba9f7a39dab691ef4af9ff2"
-                                },
-                                "users": [],
-                                "username": "masoudey",
-                                "email": "masoud.ey@gmail.com",
-                                "password": "$2b$10$uah18eeMB0O0iji9zwqXxeptqUiwbqXZdikxF9t.M2p67zHs4LEkO",
-                                "firstName": "masoud",
-                                "lastName": "eyvat",
-                                "createdAt": {
-                                    "$date": "2018-09-25T08:53:55.570Z"
-                                },
-                                "__v": 0
-                            };
+                            _context2.next = 5;
+                            return getCurrentUser(req);
+
+                        case 5:
+                            currentUser = _context2.sent;
+
+                            console.log("currentUser", currentUser);
+
                             return _context2.abrupt('return', {
                                 models: _models2.default,
                                 currentUser: currentUser,
                                 secret: process.env.JWT_SECRET
                             });
 
-                        case 5:
+                        case 8:
                         case 'end':
                             return _context2.stop();
                     }
@@ -1112,7 +1107,7 @@ var createToken = function () {
 }();
 
 var generatePasswordHash = function () {
-    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
+    var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(password) {
         var saltRound;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
             while (1) {
@@ -1120,7 +1115,7 @@ var generatePasswordHash = function () {
                     case 0:
                         saltRound = 10;
                         _context2.next = 3;
-                        return _bcrypt2.default.hashSync(this.password, saltRound);
+                        return _bcrypt2.default.hashSync(password, saltRound);
 
                     case 3:
                         return _context2.abrupt("return", _context2.sent);
@@ -1133,19 +1128,19 @@ var generatePasswordHash = function () {
         }, _callee2, this);
     }));
 
-    return function generatePasswordHash() {
+    return function generatePasswordHash(_x4) {
         return _ref2.apply(this, arguments);
     };
 }();
 
 var validatePassword = function () {
-    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(password) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(password, userPassword) {
         return regeneratorRuntime.wrap(function _callee3$(_context3) {
             while (1) {
                 switch (_context3.prev = _context3.next) {
                     case 0:
                         _context3.next = 2;
-                        return _bcrypt2.default.compare(password, this.password);
+                        return _bcrypt2.default.compare(password, userPassword);
 
                     case 2:
                         return _context3.abrupt("return", _context3.sent);
@@ -1158,7 +1153,7 @@ var validatePassword = function () {
         }, _callee3, this);
     }));
 
-    return function validatePassword(_x4) {
+    return function validatePassword(_x5, _x6) {
         return _ref3.apply(this, arguments);
     };
 }();
@@ -1187,7 +1182,7 @@ exports.default = {
                 }, _callee4, undefined);
             }));
 
-            return function users(_x5, _x6, _x7) {
+            return function users(_x7, _x8, _x9) {
                 return _ref4.apply(this, arguments);
             };
         }(),
@@ -1214,7 +1209,7 @@ exports.default = {
                 }, _callee5, undefined);
             }));
 
-            return function user(_x8, _x9, _x10) {
+            return function user(_x10, _x11, _x12) {
                 return _ref6.apply(this, arguments);
             };
         }(),
@@ -1223,6 +1218,7 @@ exports.default = {
             var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(parent, args, _ref10) {
                 var models = _ref10.models,
                     _currentUser = _ref10.currentUser;
+                var email;
                 return regeneratorRuntime.wrap(function _callee6$(_context6) {
                     while (1) {
                         switch (_context6.prev = _context6.next) {
@@ -1235,13 +1231,14 @@ exports.default = {
                                 return _context6.abrupt("return", null);
 
                             case 2:
-                                _context6.next = 4;
-                                return models.User.findById(_currentUser.id);
-
-                            case 4:
-                                return _context6.abrupt("return", _context6.sent);
+                                email = _currentUser.email;
+                                _context6.next = 5;
+                                return models.User.findOne({ email: email });
 
                             case 5:
+                                return _context6.abrupt("return", _context6.sent);
+
+                            case 6:
                             case "end":
                                 return _context6.stop();
                         }
@@ -1249,7 +1246,7 @@ exports.default = {
                 }, _callee6, undefined);
             }));
 
-            return function currentUser(_x11, _x12, _x13) {
+            return function currentUser(_x13, _x14, _x15) {
                 return _ref9.apply(this, arguments);
             };
         }()
@@ -1309,7 +1306,7 @@ exports.default = {
                 }, _callee7, undefined);
             }));
 
-            return function signUp(_x14, _x15, _x16) {
+            return function signUp(_x16, _x17, _x18) {
                 return _ref11.apply(this, arguments);
             };
         }(),
@@ -1340,7 +1337,7 @@ exports.default = {
 
                             case 5:
                                 _context8.next = 7;
-                                return validatePassword(password);
+                                return validatePassword(password, user.password);
 
                             case 7:
                                 isValidPass = _context8.sent;
@@ -1366,7 +1363,7 @@ exports.default = {
                 }, _callee8, undefined);
             }));
 
-            return function signIn(_x17, _x18, _x19) {
+            return function signIn(_x19, _x20, _x21) {
                 return _ref14.apply(this, arguments);
             };
         }(),
@@ -1407,7 +1404,7 @@ exports.default = {
                 }, _callee9, undefined);
             }));
 
-            return function (_x20, _x21, _x22) {
+            return function (_x22, _x23, _x24) {
                 return _ref17.apply(this, arguments);
             };
         }()),
@@ -1433,7 +1430,7 @@ exports.default = {
                 }, _callee10, undefined);
             }));
 
-            return function (_x23, _x24, _x25) {
+            return function (_x25, _x26, _x27) {
                 return _ref20.apply(this, arguments);
             };
         }()),
@@ -1472,7 +1469,7 @@ exports.default = {
                 }, _callee11, undefined);
             }));
 
-            return function setUserImage(_x26, _x27, _x28) {
+            return function setUserImage(_x28, _x29, _x30) {
                 return _ref23.apply(this, arguments);
             };
         }(),
@@ -1510,7 +1507,7 @@ exports.default = {
                 }, _callee12, undefined);
             }));
 
-            return function changeEmail(_x29, _x30, _x31) {
+            return function changeEmail(_x31, _x32, _x33) {
                 return _ref26.apply(this, arguments);
             };
         }(),
@@ -1553,7 +1550,7 @@ exports.default = {
                 }, _callee13, undefined);
             }));
 
-            return function changePassword(_x32, _x33, _x34) {
+            return function changePassword(_x34, _x35, _x36) {
                 return _ref29.apply(this, arguments);
             };
         }(),
@@ -1609,7 +1606,7 @@ exports.default = {
                 }, _callee14, undefined);
             }));
 
-            return function passwordReset(_x35, _x36, _x37) {
+            return function passwordReset(_x37, _x38, _x39) {
                 return _ref32.apply(this, arguments);
             };
         }()
@@ -1636,7 +1633,7 @@ exports.default = {
                 }, _callee15, undefined);
             }));
 
-            return function posts(_x38, _x39, _x40) {
+            return function posts(_x40, _x41, _x42) {
                 return _ref35.apply(this, arguments);
             };
         }()
