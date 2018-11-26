@@ -106,7 +106,7 @@ var SignIn = function (_Component) {
         };
 
         _this.onSubmit = function (e, signIn) {
-
+            e.preventDefault();
             signIn().then(function () {
                 var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref2) {
                     var data = _ref2.data;
@@ -117,13 +117,9 @@ var SignIn = function (_Component) {
                                     _this.setState(_extends({}, initialState));
 
                                     Cookies.set('token', data.signIn.token);
-
-                                    _context.next = 4;
+                                    console.log(data, Cookies.get('token'));
+                                    _context.next = 5;
                                     return _this.props.refetch();
-
-                                case 4:
-
-                                    _this.props.history.push('/dashboard');
 
                                 case 5:
                                 case "end":
@@ -136,7 +132,10 @@ var SignIn = function (_Component) {
                 return function (_x) {
                     return _ref.apply(this, arguments);
                 };
-            }()).catch(function (error) {
+            }()
+
+            // this.props.history.push('/dashboard');
+            ).catch(function (error) {
                 _this.setState({
                     error: error.graphQLErrors.map(function (x) {
                         return x.message;
@@ -146,7 +145,6 @@ var SignIn = function (_Component) {
                     return x.message;
                 }));
             });
-            e.preventDefault();
         };
 
         _this.validationForm = function () {
@@ -211,7 +209,7 @@ var SignIn = function (_Component) {
                             console.log("signin", signIn);
                             return _react2.default.createElement(
                                 "form",
-                                { name: "form", onSubmit: function onSubmit(e) {
+                                { onSubmit: function onSubmit(e) {
                                         return _this3.onSubmit(e, signIn);
                                     } },
                                 _react2.default.createElement(

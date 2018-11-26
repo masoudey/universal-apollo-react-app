@@ -7,8 +7,9 @@ import Header from "./components/Header";
 import './app.css';
 
 function App(props) {
-        console.log(props.session.currentUser);
-        const currentUser = props.session.currentUser;
+        
+        const currentUser = props.session ? props.session.currentUser : null;
+        console.log(currentUser);
         return (
             <Fragment>
                 <Header currentUser={currentUser} />

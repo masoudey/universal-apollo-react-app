@@ -25,18 +25,22 @@ const validatePassword = async function(password, userPassword) {
 
 export default {
     Query: {
-        users: async (parent, args, { models, test }) => 
-            await models.User.find(),
+        users: async (parent, args, { models }) => {
+            console.log("users");
+            return await models.User.find();
+        },
 
         user: async (parent, { id }, { models }) =>
             await models.User.findById(id),
 
         currentUser: async (parent, args, { models, currentUser }) => {
+            console.log(currentUser);
             if (!currentUser) {
                 return null;
             }
-            const email = currentUser.email;
-            return await models.User.findOne({ email })
+            const usr = await models.User.findById(currentUser.id);
+            console.log("usr", usr);
+            return usr;
         },
     },
     Mutation: {

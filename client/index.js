@@ -1,3 +1,4 @@
+import 'babel-polyfill';
 import React from "react";
 import { Router } from "react-router-dom";
 import ReactDOM, { hydrate,  } from "react-dom";
@@ -47,7 +48,7 @@ const authLink = new ApolloLink((operation, forward) => {
             'Cookie': Cookies.get('token'),
         },
     }));
-
+    console.log(Cookies.get('token'))
     return forward(operation);
 });
 

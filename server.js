@@ -160,7 +160,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _templateObject = _taggedTemplateLiteral(["\n    extend type Query {\n        currentUser: User\n        user(id: ID!): User\n        users: [User!]\n    }\n\n    extend type Mutation {\n        signUp(\n            username: String!\n            email: String!\n            password: String!\n            firstName: String! \n            lastName: String!\n            profileImage: String\n        ): AuthPayload!\n        signIn(email: String!, password: String!): AuthPayload!\n        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!\n        deleteUser(id: ID!): Boolean!\n        setUserImage(email: String!, userImage: String!): User!\n        changeEmail(currentEmail: String!, newEmail: String!): User!\n        changePassword(email: String!, password: String!): User!\n        passwordReset(email: String!): User! \n    }\n\n    type AuthPayload {\n        token: String!\n        user: User!\n    }\n\n    type User {\n        _id: ID!\n        username: String!\n        password: String!\n        email: String!\n        firstName: String! \n        lastName: String!\n        bio: String\n        userImage: String\n        role: String\n        createdAt: String!\n        posts: [Post!]\n    }\n"], ["\n    extend type Query {\n        currentUser: User\n        user(id: ID!): User\n        users: [User!]\n    }\n\n    extend type Mutation {\n        signUp(\n            username: String!\n            email: String!\n            password: String!\n            firstName: String! \n            lastName: String!\n            profileImage: String\n        ): AuthPayload!\n        signIn(email: String!, password: String!): AuthPayload!\n        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!\n        deleteUser(id: ID!): Boolean!\n        setUserImage(email: String!, userImage: String!): User!\n        changeEmail(currentEmail: String!, newEmail: String!): User!\n        changePassword(email: String!, password: String!): User!\n        passwordReset(email: String!): User! \n    }\n\n    type AuthPayload {\n        token: String!\n        user: User!\n    }\n\n    type User {\n        _id: ID!\n        username: String!\n        password: String!\n        email: String!\n        firstName: String! \n        lastName: String!\n        bio: String\n        userImage: String\n        role: String\n        createdAt: String!\n        posts: [Post!]\n    }\n"]);
+var _templateObject = _taggedTemplateLiteral(["\n    extend type Query {\n        currentUser: User\n        user(id: ID!): User\n        users: [User!]\n    }\n\n    extend type Mutation {\n        signUp(\n            username: String!\n            email: String!\n            password: String!\n            firstName: String! \n            lastName: String!\n            profileImage: String\n        ): AuthPayload!\n        signIn(email: String!, password: String!): AuthPayload!\n        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!\n        deleteUser(id: ID!): Boolean!\n        setUserImage(email: String!, userImage: String!): User!\n        changeEmail(currentEmail: String!, newEmail: String!): User!\n        changePassword(email: String!, password: String!): User!\n        passwordReset(email: String!): User! \n    }\n\n    type AuthPayload {\n        token: String!\n        user: User!\n    }\n\n    type User {\n        id: ID!\n        username: String!\n        password: String!\n        email: String!\n        firstName: String! \n        lastName: String!\n        bio: String\n        userImage: String\n        role: String\n        createdAt: String!\n        posts: [Post!]\n    }\n"], ["\n    extend type Query {\n        currentUser: User\n        user(id: ID!): User\n        users: [User!]\n    }\n\n    extend type Mutation {\n        signUp(\n            username: String!\n            email: String!\n            password: String!\n            firstName: String! \n            lastName: String!\n            profileImage: String\n        ): AuthPayload!\n        signIn(email: String!, password: String!): AuthPayload!\n        updateUser(email: String!, username: String!, firstName: String!, lastName: String!): User!\n        deleteUser(id: ID!): Boolean!\n        setUserImage(email: String!, userImage: String!): User!\n        changeEmail(currentEmail: String!, newEmail: String!): User!\n        changePassword(email: String!, password: String!): User!\n        passwordReset(email: String!): User! \n    }\n\n    type AuthPayload {\n        token: String!\n        user: User!\n    }\n\n    type User {\n        id: ID!\n        username: String!\n        password: String!\n        email: String!\n        firstName: String! \n        lastName: String!\n        bio: String\n        userImage: String\n        role: String\n        createdAt: String!\n        posts: [Post!]\n    }\n"]);
 
 var _apolloServerExpress = __webpack_require__(/*! apollo-server-express */ "apollo-server-express");
 
@@ -368,43 +368,42 @@ app.use((0, _cookieParser2.default)());
 app.use('/', _express2.default.static('public'));
 
 var getCurrentUser = function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req) {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(req, res) {
         var token;
         return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
                     case 0:
-                        console.log("Cookie", req.cookies);
+                        console.log("cookies", req.cookies);
                         token = req.cookies.token ? req.cookies.token : null;
 
-                        console.log(token);
-
                         if (!token) {
-                            _context.next = 13;
+                            _context.next = 12;
                             break;
                         }
 
-                        _context.prev = 4;
-                        _context.next = 7;
+                        _context.prev = 3;
+                        _context.next = 6;
                         return _jsonwebtoken2.default.verify(token, process.env.JWT_SECRET);
 
-                    case 7:
+                    case 6:
                         return _context.abrupt('return', _context.sent);
 
-                    case 10:
-                        _context.prev = 10;
-                        _context.t0 = _context['catch'](4);
-                        throw new _apolloServer.AuthenticationError('Session Expired...');
+                    case 9:
+                        _context.prev = 9;
+                        _context.t0 = _context['catch'](3);
 
-                    case 13:
+                        res.clearCookie('token');
+
+                    case 12:
                     case 'end':
                         return _context.stop();
                 }
             }
-        }, _callee, undefined, [[4, 10]]);
+        }, _callee, undefined, [[3, 9]]);
     }));
 
-    return function getCurrentUser(_x) {
+    return function getCurrentUser(_x, _x2) {
         return _ref.apply(this, arguments);
     };
 }();
@@ -421,31 +420,35 @@ var apollo = new _apolloServerExpress.ApolloServer({
     context: function () {
         var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(_ref3) {
             var req = _ref3.req,
+                res = _ref3.res,
                 connection = _ref3.connection;
             var currentUser;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
                 while (1) {
                     switch (_context2.prev = _context2.next) {
                         case 0:
+                            console.log("context");
+
                             if (!connection) {
-                                _context2.next = 2;
+                                _context2.next = 4;
                                 break;
                             }
 
+                            console.log("connection");
                             return _context2.abrupt('return', {
                                 models: _models2.default
                             });
 
-                        case 2:
+                        case 4:
                             if (!req) {
-                                _context2.next = 8;
+                                _context2.next = 10;
                                 break;
                             }
 
-                            _context2.next = 5;
-                            return getCurrentUser(req);
+                            _context2.next = 7;
+                            return getCurrentUser(req, res);
 
-                        case 5:
+                        case 7:
                             currentUser = _context2.sent;
 
                             console.log("currentUser", currentUser);
@@ -456,7 +459,7 @@ var apollo = new _apolloServerExpress.ApolloServer({
                                 secret: process.env.JWT_SECRET
                             });
 
-                        case 8:
+                        case 10:
                         case 'end':
                             return _context2.stop();
                     }
@@ -464,7 +467,7 @@ var apollo = new _apolloServerExpress.ApolloServer({
             }, _callee2, undefined);
         }));
 
-        return function context(_x2) {
+        return function context(_x3) {
             return _ref2.apply(this, arguments);
         };
     }()
@@ -1162,19 +1165,19 @@ exports.default = {
     Query: {
         users: function () {
             var _ref4 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4(parent, args, _ref5) {
-                var models = _ref5.models,
-                    test = _ref5.test;
+                var models = _ref5.models;
                 return regeneratorRuntime.wrap(function _callee4$(_context4) {
                     while (1) {
                         switch (_context4.prev = _context4.next) {
                             case 0:
-                                _context4.next = 2;
+                                console.log("users");
+                                _context4.next = 3;
                                 return models.User.find();
 
-                            case 2:
+                            case 3:
                                 return _context4.abrupt("return", _context4.sent);
 
-                            case 3:
+                            case 4:
                             case "end":
                                 return _context4.stop();
                         }
@@ -1218,27 +1221,31 @@ exports.default = {
             var _ref9 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee6(parent, args, _ref10) {
                 var models = _ref10.models,
                     _currentUser = _ref10.currentUser;
-                var email;
+                var usr;
                 return regeneratorRuntime.wrap(function _callee6$(_context6) {
                     while (1) {
                         switch (_context6.prev = _context6.next) {
                             case 0:
+                                console.log(_currentUser);
+
                                 if (_currentUser) {
-                                    _context6.next = 2;
+                                    _context6.next = 3;
                                     break;
                                 }
 
                                 return _context6.abrupt("return", null);
 
-                            case 2:
-                                email = _currentUser.email;
+                            case 3:
                                 _context6.next = 5;
-                                return models.User.findOne({ email: email });
+                                return models.User.findById(_currentUser.id);
 
                             case 5:
-                                return _context6.abrupt("return", _context6.sent);
+                                usr = _context6.sent;
 
-                            case 6:
+                                console.log("usr", usr);
+                                return _context6.abrupt("return", usr);
+
+                            case 8:
                             case "end":
                                 return _context6.stop();
                         }

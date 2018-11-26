@@ -67,22 +67,22 @@ class SignIn extends Component {
     }
 
     onSubmit = (e, signIn) => {
-        
+        e.preventDefault();
         signIn().then(async ({ data }) => {
             this.setState({ ...initialState });
 
             Cookies.set('token', data.signIn.token);
-
+            console.log(data, Cookies.get('token'));
             await this.props.refetch();
 
-            this.props.history.push('/dashboard');
+            // this.props.history.push('/dashboard');
         }).catch(error => {
             this.setState({
                 error: error.graphQLErrors.map(x => x.message)
             });
             console.error("ERR -", error.graphQLErrors.map(x => x.message));
         });
-        e.preventDefault();
+        
     }
 
     validationForm = () => {
@@ -106,7 +106,7 @@ class SignIn extends Component {
                         console.log("data", data);
                         console.log("signin", signIn);
                         return (
-                            <form name="form" onSubmit={e => this.onSubmit(e, signIn)}>
+                            <form onSubmit={e => this.onSubmit(e, signIn)}>
                                 <fieldset>
                                 <div class="inputrow">
                                     <i class="fa icon-user fa-fw" />

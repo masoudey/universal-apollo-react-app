@@ -61,15 +61,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/', express.static('public'));
 
-const getCurrentUser = async req => {
-    console.log("Cookie", req.cookies);
+const getCurrentUser = async (req, res) => {
+    console.log("cookies", req.cookies);
     const token = req.cookies.token ? req.cookies.token : null;
-    console.log(token);
     if (token) {
         try {
             return await jwt.verify(token, process.env.JWT_SECRET);
         } catch (e) {
-            throw new AuthenticationError('Session Expired...');
+            res.clearCookie('token');
         }
     }
 }
@@ -86,8 +85,10 @@ const apollo = new ApolloServer({
             message,
         };
     },
-    context: async ({ req, connection}) => {
+    context: async ({ req, res, connection}) => {
+        console.log("context");
         if (connection) {
+            console.log("connection")
             return {
                 models,
             };
@@ -95,7 +96,7 @@ const apollo = new ApolloServer({
 
 
         if (req) {
-            const currentUser = await getCurrentUser(req);
+            const currentUser = await getCurrentUser(req, res);
             console.log("currentUser", currentUser);
                         
             return {

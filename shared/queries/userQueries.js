@@ -4,10 +4,20 @@ import gql from "graphql-tag";
 export const GET_CURRENT_USER = gql`
     {
         currentUser{
-            _id
+            id
             username
             email
             role
+        }
+    }
+`;
+export const GET_USERS = gql`
+    {
+        users{
+            username
+            firstName
+            password
+            email
         }
     }
 `;
@@ -15,7 +25,7 @@ export const GET_CURRENT_USER = gql`
 export const GET_CLIENT_USER = gql`
     {
         currentUser @client{
-            _id
+            id
             username
             email
             role
