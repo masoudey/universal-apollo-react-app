@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+
 import { withRouter } from "react-router-dom";
 import withSession from "./components/session/withSession";
 
@@ -7,7 +8,7 @@ import Header from "./components/Header";
 import './app.css';
 
 function App(props) {
-        
+
         const currentUser = props.session ? props.session.currentUser : null;
         console.log(currentUser);
         return (
