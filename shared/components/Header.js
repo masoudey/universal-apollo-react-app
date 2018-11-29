@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, memo } from "react";
 import { UserContext } from "../contexts/userContext";
 import { withRouter, NavLink } from "react-router-dom";
 import Navbar from "../StyledComponents/Nav/Navbar";
@@ -26,4 +26,4 @@ function Header({currentUser}) {
 }
 
 
-export default withRouter(Header);
+export default withRouter(memo(Header));
