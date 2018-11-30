@@ -13,7 +13,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.SIGNIN_USER = undefined;
+exports.login = exports.SIGNIN_USER = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -43,6 +43,8 @@ var _useFormInput = __webpack_require__(/*! ../../hooks/useFormInput */ "./share
 
 var _useFormInput2 = _interopRequireDefault(_useFormInput);
 
+var _util = __webpack_require__(/*! util */ "./node_modules/util/util.js");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -56,6 +58,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
@@ -87,6 +91,27 @@ function SignInn(props) {
     );
 }
 
+var testComponent = function testComponent(_ref) {
+    var data = _ref.data;
+    return data;
+};
+
+var login = exports.login = (0, _reactApollo.graphql)(SIGNIN_USER, {
+    options: function options(props) {
+        return {
+            variables: {
+                email: props.email,
+                password: props.password
+            },
+            update: function update(cache, _ref2) {
+                _objectDestructuringEmpty(_ref2.data);
+            }
+        };
+    },
+    props: {}
+})(testComponent);
+console.log(testComponent(props));
+
 var SignIn = function (_Component) {
     _inherits(SignIn, _Component);
 
@@ -108,8 +133,8 @@ var SignIn = function (_Component) {
         _this.onSubmit = function (e, signIn) {
             e.preventDefault();
             signIn().then(function () {
-                var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref2) {
-                    var data = _ref2.data;
+                var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref4) {
+                    var data = _ref4.data;
                     return regeneratorRuntime.wrap(function _callee$(_context) {
                         while (1) {
                             switch (_context.prev = _context.next) {
@@ -130,7 +155,7 @@ var SignIn = function (_Component) {
                 }));
 
                 return function (_x) {
-                    return _ref.apply(this, arguments);
+                    return _ref3.apply(this, arguments);
                 };
             }()
 
@@ -200,10 +225,10 @@ var SignIn = function (_Component) {
                             mutation: SIGNIN_USER,
                             variables: { email: email, password: password }
                         },
-                        function (signIn, _ref3) {
-                            var data = _ref3.data,
-                                loading = _ref3.loading,
-                                error = _ref3.error;
+                        function (signIn, _ref5) {
+                            var data = _ref5.data,
+                                loading = _ref5.loading,
+                                error = _ref5.error;
 
                             console.log("data", data);
                             console.log("signin", signIn);

@@ -1,11 +1,12 @@
 import React, { Component, Fragment, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Mutation } from "react-apollo";
+import { Mutation, graphql } from "react-apollo";
 import gql from "graphql-tag";
 import * as Cookies from "es-cookie";
 
 import { Helmet } from "react-helmet";
 import useFormInput from "../../hooks/useFormInput";
+import { log } from "util";
 
 export const SIGNIN_USER = gql`
     mutation($email: String!, $password: String!) {
@@ -43,7 +44,21 @@ function SignInn(props) {
     )
 }
 
+const testComponent = ({ data }) => data;
 
+export const login = graphql(SIGNIN_USER,{
+    options: (props) => ({
+        variables: { 
+            email: props.email,
+            password: props.password
+        },
+        update: (cache, { data: {} }) => {
+            
+        },
+    }),
+    props: ({  })
+})(testComponent)
+console.log(testComponent(props));
 
 class SignIn extends Component {
     constructor(props) {
