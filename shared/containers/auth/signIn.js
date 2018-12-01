@@ -44,21 +44,6 @@ function SignInn(props) {
     )
 }
 
-const testComponent = ({ data }) => data;
-
-export const login = graphql(SIGNIN_USER,{
-    options: (props) => ({
-        variables: { 
-            email: props.email,
-            password: props.password
-        },
-        update: (cache, { data: {} }) => {
-            
-        },
-    }),
-    props: ({  })
-})(testComponent)
-console.log(testComponent(props));
 
 class SignIn extends Component {
     constructor(props) {
@@ -108,6 +93,7 @@ class SignIn extends Component {
 
     render() {
         const { email, password } = this.state;
+
         return (
             <Fragment>
                 <div class="login-wrapper">

@@ -13,7 +13,7 @@
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.login = exports.SIGNIN_USER = undefined;
+exports.SIGNIN_USER = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -59,8 +59,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
-
 function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 var SIGNIN_USER = exports.SIGNIN_USER = (0, _graphqlTag2.default)(_templateObject);
@@ -91,27 +89,6 @@ function SignInn(props) {
     );
 }
 
-var testComponent = function testComponent(_ref) {
-    var data = _ref.data;
-    return data;
-};
-
-var login = exports.login = (0, _reactApollo.graphql)(SIGNIN_USER, {
-    options: function options(props) {
-        return {
-            variables: {
-                email: props.email,
-                password: props.password
-            },
-            update: function update(cache, _ref2) {
-                _objectDestructuringEmpty(_ref2.data);
-            }
-        };
-    },
-    props: {}
-})(testComponent);
-console.log(testComponent(props));
-
 var SignIn = function (_Component) {
     _inherits(SignIn, _Component);
 
@@ -133,8 +110,8 @@ var SignIn = function (_Component) {
         _this.onSubmit = function (e, signIn) {
             e.preventDefault();
             signIn().then(function () {
-                var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref4) {
-                    var data = _ref4.data;
+                var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(_ref2) {
+                    var data = _ref2.data;
                     return regeneratorRuntime.wrap(function _callee$(_context) {
                         while (1) {
                             switch (_context.prev = _context.next) {
@@ -155,7 +132,7 @@ var SignIn = function (_Component) {
                 }));
 
                 return function (_x) {
-                    return _ref3.apply(this, arguments);
+                    return _ref.apply(this, arguments);
                 };
             }()
 
@@ -207,6 +184,7 @@ var SignIn = function (_Component) {
                 email = _state.email,
                 password = _state.password;
 
+
             return _react2.default.createElement(
                 _react.Fragment,
                 null,
@@ -225,10 +203,10 @@ var SignIn = function (_Component) {
                             mutation: SIGNIN_USER,
                             variables: { email: email, password: password }
                         },
-                        function (signIn, _ref5) {
-                            var data = _ref5.data,
-                                loading = _ref5.loading,
-                                error = _ref5.error;
+                        function (signIn, _ref3) {
+                            var data = _ref3.data,
+                                loading = _ref3.loading,
+                                error = _ref3.error;
 
                             console.log("data", data);
                             console.log("signin", signIn);
