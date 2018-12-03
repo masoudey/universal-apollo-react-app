@@ -12,7 +12,13 @@ export const SIGNUP_USER = gql`
     mutation($username: String!, $email: String!, $password: String!, $firstName: String!, $lastName: String!, $profileImage: String) {
         signUp(username: $username, email: $email, password: $password, firstName: $firstName, lastName: $lastName, profileImage:$profileImage) {
             token
-            user
+            user{
+                username
+                email
+                firstName
+                lastName
+                password
+            }
         }
     }
 `;
@@ -36,7 +42,6 @@ function SignUpp(props) {
     const firstName = useFormInput('');
     const lastName = useFormInput('');
 
-    const { data } = useContext();
     
     const passwordMatch = password !== passwordConfirm;
     const isInvalid = !firstName || !lastName || !email || !username || !password || password !== passwordConfirm
