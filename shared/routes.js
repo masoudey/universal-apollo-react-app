@@ -5,7 +5,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 const SignUp = lazy(() => import("./containers/auth/signUp"));
 const SignIn = lazy(() => import("./containers/auth/signIn"));
-const Dashboard = lazy(() => import("./containers/Dashboard"));
+const Dashboard = lazy(() => import("./containers/dashboard"));
 const Home = lazy(() => import("./containers/Home"));
 import withAuth from "./components/session/withAuth";
 
