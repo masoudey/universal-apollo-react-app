@@ -6,7 +6,6 @@ import * as Cookies from "es-cookie";
 
 import { Helmet } from "react-helmet";
 import useFormInput from "../../hooks/useFormInput";
-import { log } from "util";
 
 export const SIGNIN_USER = gql`
     mutation($email: String!, $password: String!) {
