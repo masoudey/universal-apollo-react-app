@@ -7,7 +7,7 @@ export const defaults = {
 };
 
 export const t = {
-   y:' '
+   
 }
 
 export const resolvers = {
