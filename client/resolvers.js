@@ -6,13 +6,8 @@ export const defaults = {
     posts:[],
 };
 
-<<<<<<< HEAD
-export const yy = {
-    
-=======
 export const t = {
     m:""
->>>>>>> 742ef95d964625788cacd7ebec0984ba642845a4
 }
 
 export const resolvers = {
