@@ -7,7 +7,7 @@ export const defaults = {
 };
 
 export const test = {
-    h: {},
+    
 }
 
 export const resolvers = {
