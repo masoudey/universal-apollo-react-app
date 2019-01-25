@@ -6,7 +6,7 @@ export const defaults = {
     posts:[],
 };
 
-export const test = {
+export const t = {
     
 }
 
