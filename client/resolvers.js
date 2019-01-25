@@ -6,6 +6,10 @@ export const defaults = {
     posts:[],
 };
 
+export const test = {
+    h: {},
+}
+
 export const resolvers = {
     Mutation: {
         signUp: (_, { username, email, password, firstName, lastName, userImage }, { cache }) => {
