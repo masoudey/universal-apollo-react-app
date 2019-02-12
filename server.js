@@ -353,7 +353,7 @@ var configurations = {
     development: { ssl: false, port: PORT, hostname: 'localhost' }
 };
 
-var environment = "development" || 'production';
+var environment = "development" || false;
 var config = configurations[environment];
 
 var app = (0, _express2.default)();

@@ -25,7 +25,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 var _reactApollo = __webpack_require__(/*! react-apollo */ "./node_modules/react-apollo/react-apollo.browser.umd.js");
 
@@ -42,8 +42,6 @@ var _reactHelmet = __webpack_require__(/*! react-helmet */ "./node_modules/react
 var _useFormInput = __webpack_require__(/*! ../../hooks/useFormInput */ "./shared/hooks/useFormInput.js");
 
 var _useFormInput2 = _interopRequireDefault(_useFormInput);
-
-var _util = __webpack_require__(/*! util */ "./node_modules/util/util.js");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 

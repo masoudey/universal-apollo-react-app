@@ -90,19 +90,19 @@ const client = new ApolloClient({
 
 const history = createBrowserHistory();
 const root = document.getElementById('root');
-ReactDOM.createRoot(root).render(
-<ApolloProvider client={client} >
-    <Router history={history}>
-        <App />
-    </Router>
-</ApolloProvider>);
-// hydrate(
-//     <ApolloProvider client={client} >
-//         <Router history={history}>
-//             <App />
-//         </Router>
-//     </ApolloProvider>,
-//     root
-// );
+// ReactDOM.createRoot(root).render(
+// <ApolloProvider client={client} >
+//     <Router history={history}>
+//         <App />
+//     </Router>
+// </ApolloProvider>);
+hydrate(
+    <ApolloProvider client={client} >
+        <Router history={history}>
+            <App />
+        </Router>
+    </ApolloProvider>,
+    root
+);
 
 registerServiceWorker();
